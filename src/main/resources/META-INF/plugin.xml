@@ -1,0 +1,21 @@
+<idea-plugin>
+    <id>ca.ulaval.glo.sensei</id>
+    <name>Sensei - Code Reviews</name>
+    <vendor email="samuelcabralcruz@gmail.com" url="https://github.com/SamuelCabralCruz/sensei">Sensei</vendor>
+
+    <description><![CDATA[TODO - placeholder description to be modified later]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+    </extensions>
+
+    <actions>
+        <group id="sensei.actions" text="Sensei">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action class="ca.ulaval.glo.HelloAction" id="sensei.actions.hello" text="Hello">
+                <keyboard-shortcut first-keystroke="control shift F4" keymap="$default" replace-all="true"/>
+            </action>
+        </group>
+    </actions>
+</idea-plugin>
