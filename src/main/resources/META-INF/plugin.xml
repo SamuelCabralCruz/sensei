@@ -9,6 +9,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <codeInsight.lineMarkerProvider language="" implementationClass="ca.ulaval.glo.RunnableLineMarkerProvider"/>
+        <applicationService serviceImplementation="ca.ulaval.glo.CustomStateComponent"/>
     </extensions>
 
     <actions>
@@ -16,6 +17,10 @@
             <add-to-group group-id="MainMenu" anchor="last"/>
             <action class="ca.ulaval.glo.HelloAction" id="sensei.actions.hello" text="Hello">
                 <keyboard-shortcut first-keystroke="control shift F4" keymap="$default" replace-all="true"/>
+            </action>
+            <action class="ca.ulaval.glo.ActionOpeningCustomDialogWrapper" id="sensei.actions.openCustomDialog"
+                    text="Open Custom Dialog">
+                <keyboard-shortcut first-keystroke="control shift F5" keymap="$default" replace-all="true"/>
             </action>
         </group>
     </actions>
