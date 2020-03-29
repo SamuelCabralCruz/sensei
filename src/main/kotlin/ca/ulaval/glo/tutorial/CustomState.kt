@@ -1,4 +1,4 @@
-package ca.ulaval.glo
+package ca.ulaval.glo.tutorial
 
 class CustomState {
     var mode = "default value"

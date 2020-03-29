@@ -1,5 +1,6 @@
-package ca.ulaval.glo
+package ca.ulaval.glo.tutorial
 
+import ca.ulaval.glo.tutorial.CustomStateComponent
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.components.JBLabel
 import com.intellij.uiDesigner.core.AbstractLayout

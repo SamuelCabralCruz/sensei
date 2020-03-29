@@ -9,17 +9,16 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <codeInsight.lineMarkerProvider language="" implementationClass="ca.ulaval.glo.RunnableLineMarkerProvider"/>
-        <applicationService serviceImplementation="ca.ulaval.glo.CustomStateComponent"/>
+        <applicationService serviceImplementation="ca.ulaval.glo.persistence.ReviewPersistence"/>
     </extensions>
 
     <actions>
         <group id="sensei.actions" text="Sensei">
             <add-to-group group-id="MainMenu" anchor="last"/>
-            <action class="ca.ulaval.glo.HelloAction" id="sensei.actions.hello" text="Hello">
+            <action class="ca.ulaval.glo.AddCommentAction" id="sensei.actions.addComment" text="Add Comment">
                 <keyboard-shortcut first-keystroke="control shift F4" keymap="$default" replace-all="true"/>
             </action>
-            <action class="ca.ulaval.glo.ActionOpeningCustomDialogWrapper" id="sensei.actions.openCustomDialog"
-                    text="Open Custom Dialog">
+            <action class="ca.ulaval.glo.ClearReviewAction" id="sensei.actions.clearReview" text="Clear Review">
                 <keyboard-shortcut first-keystroke="control shift F5" keymap="$default" replace-all="true"/>
             </action>
         </group>

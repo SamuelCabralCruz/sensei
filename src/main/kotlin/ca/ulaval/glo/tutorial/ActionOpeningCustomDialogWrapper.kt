@@ -1,5 +1,6 @@
-package ca.ulaval.glo
+package ca.ulaval.glo.tutorial
 
+import ca.ulaval.glo.tutorial.CustomDialogWrapper
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.ui.Messages

@@ -1,4 +1,4 @@
-package ca.ulaval.glo
+package ca.ulaval.glo.tutorial
 
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
