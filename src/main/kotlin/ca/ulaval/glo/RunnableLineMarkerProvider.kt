@@ -10,6 +10,7 @@ import com.intellij.openapi.editor.markup.GutterIconRenderer
 import com.intellij.openapi.editor.markup.MarkupEditorFilter
 import com.intellij.openapi.editor.markup.MarkupEditorFilterFactory
 import com.intellij.openapi.ui.Messages
+import com.intellij.openapi.util.text.StringUtil
 import com.intellij.psi.PsiElement
 import com.intellij.util.Function
 import com.intellij.util.PlatformIcons.FILE_ICON
@@ -18,39 +19,48 @@ import javax.swing.Icon
 
 class RunnableLineMarkerProvider : LineMarkerProvider {
     override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<*>? {
-        return if (isElementWithComment(element)) {
-            val actionGroup = DefaultActionGroup()
-            actionGroup.add(LineMarkerActionWrapper(element, TestAction()))
-            actionGroup.add(Separator())
-            val tooltipProvider =
-                Function { _: PsiElement? ->
-                    val tooltip = StringBuilder()
-                    tooltip.append("test action")
-                    if (tooltip.isEmpty()) null else tooltip.toString()
-                }
-            RunLineMarkerInfo(element, FILE_ICON, tooltipProvider, actionGroup)
-        } else {
-            null
-        }
+        return null
     }
 
-    private fun isElementWithComment(element: PsiElement): Boolean {
-        if (element.children.isNotEmpty()) return false
-        val review = ReviewPersistence.getInstance().state
-        if (review != null) {
-            val projectBasePath = element.project.basePath
-            val projectFilePath = element.containingFile.virtualFile.path
-            val projectFileRelativePath = projectFilePath.replace(projectBasePath!!, "")
-            val fileComments = review.comments[projectFileRelativePath]
-            if (fileComments != null) {
-                return fileComments.any(fun(x: ReviewComment): Boolean {
-                    val psiElementAtOffset =
-                        element.containingFile.findElementAt(x.startOffset)?.originalElement
-                    return element.isEquivalentTo(psiElementAtOffset)
-                })
+    override fun collectSlowLineMarkers(
+        elements: MutableList<PsiElement>,
+        result: MutableCollection<LineMarkerInfo<PsiElement>>
+    ) {
+        val reviewComments = ReviewPersistence.getInstance().state?.comments ?: return
+        val projectBasePath = elements[0].project.basePath ?: return
+        val containingFile = elements[0].containingFile
+        val containingFileText = containingFile.text
+        val virtualFilePath = containingFile.virtualFile.path
+        val currentFileRelativePath = virtualFilePath.replace(projectBasePath, "")
+        val reviewCommentsForCurrentFile = reviewComments[currentFileRelativePath] ?: return
+        val reviewCommentsForCurrentFileByLine = mutableMapOf<Int, MutableList<ReviewComment>>()
+        reviewCommentsForCurrentFile.forEach(fun(reviewComment) {
+            val lineReviewComments = reviewCommentsForCurrentFileByLine[reviewComment.startingLine] ?: mutableListOf()
+            lineReviewComments.add(reviewComment)
+            reviewCommentsForCurrentFileByLine[reviewComment.startingLine] = lineReviewComments
+        })
+        elements.forEach(fun(element) {
+            val elementLine = StringUtil.offsetToLineNumber(containingFileText, element.textRange.startOffset)
+            val lineReviewComments = reviewCommentsForCurrentFileByLine[elementLine]
+            lineReviewComments?.forEach(fun(lineReviewComment) {
+                println(lineReviewComment.startingLine)
+                result.add(createLineMarker(element))
+                reviewCommentsForCurrentFileByLine.remove(elementLine)
+            })
+        })
+    }
+
+    private fun createLineMarker(element: PsiElement): RunLineMarkerInfo {
+        val actionGroup = DefaultActionGroup()
+        actionGroup.add(LineMarkerActionWrapper(element, TestAction()))
+        actionGroup.add(Separator())
+        val tooltipProvider =
+            Function { _: PsiElement? ->
+                val tooltip = StringBuilder()
+                tooltip.append("test action")
+                if (tooltip.isEmpty()) null else tooltip.toString()
             }
-        }
-        return false
+        return RunLineMarkerInfo(element, FILE_ICON, tooltipProvider, actionGroup)
     }
 
     private class TestAction : AnAction("test action name", "test action description", JAR_ICON) {
@@ -65,7 +75,7 @@ class RunnableLineMarkerProvider : LineMarkerProvider {
         tooltipProvider: Function<PsiElement?, String?>?,
         private val myActionGroup: DefaultActionGroup
     ) :
-        LineMarkerInfo<PsiElement?>(
+        LineMarkerInfo<PsiElement>(
             element,
             element.textRange,
             icon,
@@ -74,7 +84,7 @@ class RunnableLineMarkerProvider : LineMarkerProvider {
             GutterIconRenderer.Alignment.CENTER
         ) {
         override fun createGutterRenderer(): GutterIconRenderer? {
-            return object : LineMarkerGutterIconRenderer<PsiElement?>(this) {
+            return object : LineMarkerGutterIconRenderer<PsiElement>(this) {
                 override fun getClickAction(): AnAction? {
                     return null
                 }
@@ -94,4 +104,3 @@ class RunnableLineMarkerProvider : LineMarkerProvider {
         }
     }
 }
-

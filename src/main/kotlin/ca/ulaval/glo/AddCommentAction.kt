@@ -26,7 +26,7 @@ class AddCommentAction : AnAction() {
             val filePath = e.getData(LangDataKeys.VIRTUAL_FILE)!!.path
             val projectBasePath = e.project?.basePath
             reviewComment.filePath = filePath.replace(projectBasePath!!, "")
-            reviewComment.startOffset = editor.document.getLineEndOffset(chunkStartLine)
+            reviewComment.startingLine = chunkStartLine + 1
             reviewComment.codeSnippet = codeSnippet
             val review = ReviewPersistence.getInstance().state
             if (review != null) {
