@@ -1,8 +1,8 @@
 package ca.ulaval.glo.action
 
-import ca.ulaval.glo.persistence.ReviewPersistence
-import ca.ulaval.glo.state.Review
-import ca.ulaval.glo.state.ReviewComment
+import ca.ulaval.glo.persistence.review.ReviewPersistence
+import ca.ulaval.glo.persistence.review.state.Review
+import ca.ulaval.glo.persistence.review.state.ReviewComment
 import ca.ulaval.glo.util.getRelativeFilePath
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.openapi.actionSystem.AnAction
@@ -17,7 +17,6 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiFile
 import java.lang.Integer.max
 import java.lang.Integer.min
-
 
 class AddCommentAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {

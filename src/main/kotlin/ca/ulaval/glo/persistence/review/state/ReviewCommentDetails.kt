@@ -1,4 +1,4 @@
-package ca.ulaval.glo.state
+package ca.ulaval.glo.persistence.review.state
 
 class ReviewCommentDetails {
     var description = ""

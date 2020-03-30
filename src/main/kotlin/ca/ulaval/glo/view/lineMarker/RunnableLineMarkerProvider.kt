@@ -1,7 +1,7 @@
 package ca.ulaval.glo.view.lineMarker
 
-import ca.ulaval.glo.persistence.ReviewPersistence
-import ca.ulaval.glo.state.ReviewComment
+import ca.ulaval.glo.persistence.review.ReviewPersistence
+import ca.ulaval.glo.persistence.review.state.ReviewComment
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
 import com.intellij.openapi.util.text.StringUtil

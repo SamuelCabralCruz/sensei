@@ -1,6 +1,6 @@
-package ca.ulaval.glo.persistence
+package ca.ulaval.glo.persistence.review
 
-import ca.ulaval.glo.state.Review
+import ca.ulaval.glo.persistence.review.state.Review
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
