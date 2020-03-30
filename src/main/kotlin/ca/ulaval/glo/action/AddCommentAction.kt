@@ -3,7 +3,9 @@ package ca.ulaval.glo.action
 import ca.ulaval.glo.persistence.review.ReviewPersistence
 import ca.ulaval.glo.persistence.review.state.Review
 import ca.ulaval.glo.persistence.review.state.ReviewComment
+import ca.ulaval.glo.persistence.review.state.ReviewCommentDetails
 import ca.ulaval.glo.util.getRelativeFilePath
+import ca.ulaval.glo.view.comment.EditCommentDialog
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -11,7 +13,6 @@ import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.util.TextRange
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiFile
@@ -28,8 +29,18 @@ class AddCommentAction : AnAction() {
         val review = ReviewPersistence.getInstance().state ?: return
 
         val codeSnippet = getCodeSnippet(caret, editor)
-        val reviewComment = createReviewComment(project, virtualFile, caret.selectionStartPosition.line, codeSnippet)
-        persistReviewComment(review, reviewComment, e, containingFile)
+        val editCommentDialog = EditCommentDialog()
+        if (editCommentDialog.showAndGet()) {
+            val reviewComment =
+                createReviewComment(
+                    project,
+                    virtualFile,
+                    caret.selectionStartPosition.line,
+                    codeSnippet,
+                    editCommentDialog.getDescription()
+                )
+            persistReviewComment(review, reviewComment, e, containingFile)
+        }
     }
 
     private fun getCodeSnippet(
@@ -43,21 +54,24 @@ class AddCommentAction : AnAction() {
         val startOffset = editor.document.getLineStartOffset(selectionStartLine)
         val endOffset = editor.document.getLineEndOffset(selectionEndLine)
         val textRange = TextRange.from(startOffset, endOffset - startOffset)
-        val codeSnippet = editor.document.getText(textRange)
-        Messages.showMessageDialog(codeSnippet, "sensei", Messages.getInformationIcon())
-        return codeSnippet
+        // TODO: CLEAN UP
+        // Messages.showMessageDialog(codeSnippet, "sensei", Messages.getInformationIcon())
+        return editor.document.getText(textRange)
     }
 
     private fun createReviewComment(
         project: Project,
         virtualFile: VirtualFile,
         chunkStartLine: Int,
-        codeSnippet: String
+        codeSnippet: String,
+        description: String
     ): ReviewComment {
         val reviewComment = ReviewComment()
         reviewComment.filePath = getRelativeFilePath(project, virtualFile)
         reviewComment.startingLine = chunkStartLine + 1
         reviewComment.codeSnippet = codeSnippet
+        reviewComment.details = ReviewCommentDetails()
+        reviewComment.details.description = description
         return reviewComment
     }
 

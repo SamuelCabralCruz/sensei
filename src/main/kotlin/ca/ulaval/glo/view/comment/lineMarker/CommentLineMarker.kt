@@ -1,4 +1,4 @@
-package ca.ulaval.glo.view.lineMarker
+package ca.ulaval.glo.view.comment.lineMarker
 
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.icons.AllIcons

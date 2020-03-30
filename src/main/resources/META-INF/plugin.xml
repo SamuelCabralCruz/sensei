@@ -8,7 +8,7 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <codeInsight.lineMarkerProvider language="" implementationClass="ca.ulaval.glo.view.lineMarker.RunnableLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider language="" implementationClass="ca.ulaval.glo.view.comment.lineMarker.RunnableLineMarkerProvider"/>
         <applicationService serviceImplementation="ca.ulaval.glo.persistence.review.ReviewPersistence"/>
     </extensions>
 

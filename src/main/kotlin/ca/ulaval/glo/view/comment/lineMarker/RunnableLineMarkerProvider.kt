@@ -1,4 +1,4 @@
-package ca.ulaval.glo.view.lineMarker
+package ca.ulaval.glo.view.comment.lineMarker
 
 import ca.ulaval.glo.persistence.review.ReviewPersistence
 import ca.ulaval.glo.persistence.review.state.ReviewComment
