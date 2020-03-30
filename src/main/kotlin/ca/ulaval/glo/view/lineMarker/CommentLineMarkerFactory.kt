@@ -2,7 +2,7 @@ package ca.ulaval.glo.view.lineMarker
 
 import ca.ulaval.glo.action.EditCommentAction
 import ca.ulaval.glo.action.RemoveCommentAction
-import ca.ulaval.glo.persistence.review.state.ReviewCommentDetails
+import ca.ulaval.glo.persistence.review.state.ReviewComment
 import ca.ulaval.glo.util.prepend
 import ca.ulaval.glo.util.wrap
 import com.intellij.execution.lineMarker.LineMarkerActionWrapper
@@ -15,7 +15,9 @@ class CommentLineMarkerFactory {
     // TODO: clean up
     // TODO: edit comment action
     // TODO: remove comment action
-    fun create(element: PsiElement, reviewCommentDetails: ReviewCommentDetails): CommentLineMarker {
+    // TODO: split apart action group creation
+    // TODO: split apart tooltip provider
+    fun create(element: PsiElement, reviewComment: ReviewComment): CommentLineMarker {
         val actionGroup = DefaultActionGroup()
         actionGroup.add(
             LineMarkerActionWrapper(
@@ -27,7 +29,7 @@ class CommentLineMarkerFactory {
         actionGroup.add(
             LineMarkerActionWrapper(
                 element,
-                RemoveCommentAction()
+                RemoveCommentAction(reviewComment)
             )
         )
         actionGroup.add(Separator())
@@ -35,13 +37,16 @@ class CommentLineMarkerFactory {
             Function { _: PsiElement ->
                 val tooltip = StringBuilder()
                 tooltip.append("Code Review Comment")
-                if (reviewCommentDetails.description.isNotEmpty()) {
+                val reviewCommentDetails = reviewComment.details
+                val description = reviewCommentDetails.description
+                if (description.isNotEmpty()) {
                     tooltip.append("\n\nDescription:\n")
-                    tooltip.append(prepend(wrap(reviewCommentDetails.description, 60), "\t"))
+                    tooltip.append(prepend(wrap(description, 60), "\t"))
                 }
-                if (reviewCommentDetails.tags.isNotEmpty()) {
+                val tags = reviewCommentDetails.tags
+                if (tags.isNotEmpty()) {
                     tooltip.append("\n\nTags:\n")
-                    tooltip.append("\t" + reviewCommentDetails.tags.joinToString(", "))
+                    tooltip.append("\t" + tags.joinToString(", "))
                 }
                 if (tooltip.isEmpty()) "" else tooltip.toString()
             }

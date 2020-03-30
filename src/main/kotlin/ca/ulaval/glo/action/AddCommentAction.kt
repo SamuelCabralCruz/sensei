@@ -67,9 +67,7 @@ class AddCommentAction : AnAction() {
         e: AnActionEvent,
         containingFile: PsiFile
     ) {
-        val reviewComments = review.comments.getOrDefault(reviewComment.filePath, mutableListOf())
-        reviewComments.add(reviewComment)
-        review.comments[reviewComment.filePath] = reviewComments
+        review.addComment(reviewComment)
         DaemonCodeAnalyzer.getInstance(e.project).restart(containingFile)
     }
 }
