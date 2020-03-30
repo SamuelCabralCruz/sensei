@@ -22,4 +22,9 @@ class Review {
         })
         comments[filePath] = updatedComments
     }
+
+    fun replaceComment(oldComment: ReviewComment, newComment: ReviewComment) {
+        removeComment(oldComment)
+        addComment(newComment)
+    }
 }

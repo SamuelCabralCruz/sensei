@@ -22,7 +22,7 @@ class CommentLineMarkerFactory {
         actionGroup.add(
             LineMarkerActionWrapper(
                 element,
-                EditCommentAction()
+                EditCommentAction(reviewComment)
             )
         )
         actionGroup.add(Separator())

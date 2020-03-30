@@ -37,7 +37,7 @@ class AddCommentAction : AnAction() {
                     virtualFile,
                     caret.selectionStartPosition.line,
                     codeSnippet,
-                    editCommentDialog.getDescription()
+                    editCommentDialog.getDetails()
                 )
             persistReviewComment(review, reviewComment, e, containingFile)
         }
@@ -64,14 +64,13 @@ class AddCommentAction : AnAction() {
         virtualFile: VirtualFile,
         chunkStartLine: Int,
         codeSnippet: String,
-        description: String
+        details: ReviewCommentDetails
     ): ReviewComment {
         val reviewComment = ReviewComment()
         reviewComment.filePath = getRelativeFilePath(project, virtualFile)
         reviewComment.startingLine = chunkStartLine + 1
         reviewComment.codeSnippet = codeSnippet
-        reviewComment.details = ReviewCommentDetails()
-        reviewComment.details.description = description
+        reviewComment.details = details
         return reviewComment
     }
 
