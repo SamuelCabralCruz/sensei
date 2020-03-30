@@ -1,6 +1,7 @@
 package ca.ulaval.glo.view.lineMarker
 
 import com.intellij.codeInsight.daemon.LineMarkerInfo
+import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.ActionGroup
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.DefaultActionGroup
@@ -9,18 +10,16 @@ import com.intellij.openapi.editor.markup.MarkupEditorFilter
 import com.intellij.openapi.editor.markup.MarkupEditorFilterFactory
 import com.intellij.psi.PsiElement
 import com.intellij.util.Function
-import javax.swing.Icon
 
 class CommentLineMarker(
     element: PsiElement,
-    icon: Icon?,
-    tooltipProvider: Function<PsiElement, String?>,
+    tooltipProvider: Function<PsiElement, String>,
     private val myActionGroup: DefaultActionGroup
 ) :
     LineMarkerInfo<PsiElement>(
         element,
         element.textRange,
-        icon,
+        AllIcons.Nodes.Target,
         tooltipProvider,
         null,
         GutterIconRenderer.Alignment.CENTER

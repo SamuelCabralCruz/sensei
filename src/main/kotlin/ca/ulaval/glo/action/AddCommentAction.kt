@@ -38,8 +38,8 @@ class AddCommentAction : AnAction() {
     ): String {
         val chunkStartLine = caret.selectionStartPosition.line
         val chunkEndLine = caret.selectionEndPosition.line
-        val selectionStartLine = max(chunkStartLine - 10, 0)
-        val selectionEndLine = min(chunkEndLine + 10, editor.document.lineCount - 1)
+        val selectionStartLine = max(chunkStartLine - 9, 0)
+        val selectionEndLine = min(chunkEndLine + 11, editor.document.lineCount - 1)
         val startOffset = editor.document.getLineStartOffset(selectionStartLine)
         val endOffset = editor.document.getLineEndOffset(selectionEndLine)
         val textRange = TextRange.from(startOffset, endOffset - startOffset)

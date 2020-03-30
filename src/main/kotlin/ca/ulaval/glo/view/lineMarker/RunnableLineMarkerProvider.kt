@@ -32,9 +32,9 @@ class RunnableLineMarkerProvider : LineMarkerProvider {
         elements.forEach(fun(element) {
             val elementLine = StringUtil.offsetToLineNumber(containingFileText, element.textRange.startOffset)
             val lineReviewComments = reviewCommentsForCurrentFileByLine[elementLine]
-            lineReviewComments?.forEach(fun(lineReviewComment) {
-                println(lineReviewComment.startingLine)
-                result.add(CommentLineMarkerFactory().create(element))
+            lineReviewComments?.forEach(fun(reviewComment) {
+                println(reviewComment.startingLine)
+                result.add(CommentLineMarkerFactory().create(element, reviewComment.details))
                 reviewCommentsForCurrentFileByLine.remove(elementLine)
             })
         })
