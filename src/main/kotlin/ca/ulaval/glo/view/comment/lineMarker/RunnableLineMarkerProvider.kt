@@ -16,8 +16,9 @@ class RunnableLineMarkerProvider : LineMarkerProvider {
         elements: MutableList<PsiElement>,
         result: MutableCollection<LineMarkerInfo<PsiElement>>
     ) {
-        val reviewComments = ReviewPersistence.getInstance().state?.comments ?: return
-        val projectBasePath = elements[0].project.basePath ?: return
+        val project = elements[0].project
+        val reviewComments = ReviewPersistence.getInstance(project).state?.comments ?: return
+        val projectBasePath = project.basePath ?: return
         val containingFile = elements[0].containingFile
         val containingFileText = containingFile.text
         val virtualFilePath = containingFile.virtualFile.path

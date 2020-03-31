@@ -6,16 +6,18 @@ import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
+import com.intellij.openapi.components.service
 import com.intellij.openapi.ui.Messages
 import com.intellij.util.PlatformIcons
 
 class RemoveCommentAction(private val comment: ReviewComment) :
     AnAction("Remove comment", "", PlatformIcons.DELETE_ICON) {
     override fun actionPerformed(e: AnActionEvent) {
-        val review = ReviewPersistence.getInstance().state ?: return
+        val project = e.project ?: return
+        val review = project.service<ReviewPersistence>().state ?: return
         val containingFile = e.getData(LangDataKeys.PSI_FILE)?.originalFile ?: return
         if (Messages.showOkCancelDialog(
-                e.project,
+                project,
                 "Are you sure you want to delete this comment?",
                 "Remove Comment",
                 "Ok",
@@ -24,7 +26,7 @@ class RemoveCommentAction(private val comment: ReviewComment) :
             ) == Messages.OK
         ) {
             review.removeComment(comment)
-            DaemonCodeAnalyzer.getInstance(e.project).restart(containingFile)
+            DaemonCodeAnalyzer.getInstance(project).restart(containingFile)
         }
     }
 }

@@ -10,6 +10,7 @@ import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
+import com.intellij.openapi.components.service
 import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
@@ -26,7 +27,7 @@ class AddCommentAction : AnAction() {
         val editor = e.getData(LangDataKeys.EDITOR) ?: return
         val virtualFile = e.getData(LangDataKeys.VIRTUAL_FILE) ?: return
         val containingFile = e.getData(LangDataKeys.PSI_FILE)?.originalFile ?: return
-        val review = ReviewPersistence.getInstance().state ?: return
+        val review = project.service<ReviewPersistence>().state ?: return
 
         val codeSnippet = getCodeSnippet(caret, editor)
         val editCommentDialog = EditCommentDialog()
@@ -39,7 +40,7 @@ class AddCommentAction : AnAction() {
                     codeSnippet,
                     editCommentDialog.getDetails()
                 )
-            persistReviewComment(review, reviewComment, e, containingFile)
+            persistReviewComment(review, reviewComment, project, containingFile)
         }
     }
 
@@ -77,10 +78,10 @@ class AddCommentAction : AnAction() {
     private fun persistReviewComment(
         review: Review,
         reviewComment: ReviewComment,
-        e: AnActionEvent,
+        project: Project,
         containingFile: PsiFile
     ) {
         review.addComment(reviewComment)
-        DaemonCodeAnalyzer.getInstance(e.project).restart(containingFile)
+        DaemonCodeAnalyzer.getInstance(project).restart(containingFile)
     }
 }

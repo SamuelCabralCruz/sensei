@@ -2,10 +2,15 @@ package ca.ulaval.glo.persistence.review
 
 import ca.ulaval.glo.persistence.review.state.Review
 import com.intellij.openapi.components.PersistentStateComponent
-import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
+import com.intellij.openapi.project.Project
+import org.apache.http.annotation.Obsolete
 
-@Storage("review.xml")
+@State(
+    name = "ReviewPersistence",
+    storages = [Storage(value = "review.ipr")]
+)
 class ReviewPersistence : PersistentStateComponent<Review> {
     private var stateValue = Review()
 
@@ -18,9 +23,9 @@ class ReviewPersistence : PersistentStateComponent<Review> {
     }
 
     companion object {
-        @JvmStatic
-        fun getInstance(): PersistentStateComponent<Review> {
-            return ServiceManager.getService(ReviewPersistence::class.java)
+        @Obsolete
+        fun getInstance(project: Project): PersistentStateComponent<Review> {
+            return project.getService(ReviewPersistence::class.java)
         }
     }
 }
