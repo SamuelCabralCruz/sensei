@@ -2,13 +2,15 @@
     <id>ca.ulaval.glo.sensei</id>
     <name>Sensei - Code Reviews</name>
     <vendor email="samuelcabralcruz@gmail.com" url="https://github.com/SamuelCabralCruz/sensei">Sensei</vendor>
+    <version>0.0.1</version>
 
     <description><![CDATA[TODO - placeholder description to be modified later]]></description>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <codeInsight.lineMarkerProvider language="" implementationClass="ca.ulaval.glo.view.comment.lineMarker.RunnableLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider language=""
+                                        implementationClass="ca.ulaval.glo.view.comment.lineMarker.RunnableLineMarkerProvider"/>
         <applicationService serviceImplementation="ca.ulaval.glo.persistence.review.ReviewPersistence"/>
     </extensions>
 
