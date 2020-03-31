@@ -1,10 +1,10 @@
 package ca.ulaval.glo.persistence.review.state
 
-enum class CommentTag(private val key: String) {
-    ARCHITECTURE("Architecture"),
-    CLEAN_CODE("Clean Code"),
-    IMPORTANT("Important"),
-    QUESTION("Question");
+enum class CommentTag(private val key: String, private val short: Char) {
+    ARCHITECTURE("Architecture", 'A'),
+    CLEAN_CODE("Clean Code", 'C'),
+    IMPORTANT("Important", 'I'),
+    QUESTION("Question", 'Q');
 
     fun getKey(): String {
         return key

@@ -50,13 +50,11 @@ class AddCommentAction : AnAction() {
     ): String {
         val chunkStartLine = caret.selectionStartPosition.line
         val chunkEndLine = caret.selectionEndPosition.line
-        val selectionStartLine = max(chunkStartLine - 9, 0)
-        val selectionEndLine = min(chunkEndLine + 11, editor.document.lineCount - 1)
+        val selectionStartLine = max(chunkStartLine - 10, 0)
+        val selectionEndLine = min(chunkEndLine + 10, editor.document.lineCount - 1)
         val startOffset = editor.document.getLineStartOffset(selectionStartLine)
         val endOffset = editor.document.getLineEndOffset(selectionEndLine)
         val textRange = TextRange.from(startOffset, endOffset - startOffset)
-        // TODO: CLEAN UP
-        // Messages.showMessageDialog(codeSnippet, "sensei", Messages.getInformationIcon())
         return editor.document.getText(textRange)
     }
 
@@ -69,7 +67,7 @@ class AddCommentAction : AnAction() {
     ): ReviewComment {
         val reviewComment = ReviewComment()
         reviewComment.filePath = getRelativeFilePath(project, virtualFile)
-        reviewComment.startingLine = chunkStartLine + 1
+        reviewComment.startingLine = chunkStartLine
         reviewComment.codeSnippet = codeSnippet
         reviewComment.details = details
         return reviewComment
