@@ -1,4 +1,4 @@
-package ca.ulaval.glo.view.comment.lineMarker
+package ca.ulaval.glo.view.lineMarker
 
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.icons.AllIcons
@@ -14,7 +14,7 @@ import com.intellij.util.Function
 class CommentLineMarker(
     element: PsiElement,
     tooltipProvider: Function<PsiElement, String>,
-    private val myActionGroup: DefaultActionGroup
+    private val actionGroup: DefaultActionGroup
 ) :
     LineMarkerInfo<PsiElement>(
         element,
@@ -35,7 +35,7 @@ class CommentLineMarker(
             }
 
             override fun getPopupMenuActions(): ActionGroup? {
-                return myActionGroup
+                return actionGroup
             }
         }
     }

@@ -4,7 +4,7 @@ import ca.ulaval.glo.model.Review
 import ca.ulaval.glo.model.ReviewComment
 import ca.ulaval.glo.persistence.ReviewPersistence
 import ca.ulaval.glo.util.getRelativeFilePath
-import ca.ulaval.glo.view.comment.EditCommentDialog
+import ca.ulaval.glo.view.dialog.EditCommentDialog
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent

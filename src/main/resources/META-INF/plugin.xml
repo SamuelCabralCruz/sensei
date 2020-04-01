@@ -10,7 +10,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <codeInsight.lineMarkerProvider language=""
-                                        implementationClass="ca.ulaval.glo.view.comment.lineMarker.RunnableLineMarkerProvider"/>
+                                        implementationClass="ca.ulaval.glo.view.lineMarker.RunnableLineMarkerProvider"/>
         <projectService serviceImplementation="ca.ulaval.glo.persistence.ReviewPersistence"/>
     </extensions>
 

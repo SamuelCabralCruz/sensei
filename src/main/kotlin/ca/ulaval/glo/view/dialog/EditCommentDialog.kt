@@ -1,4 +1,4 @@
-package ca.ulaval.glo.view.comment
+package ca.ulaval.glo.view.dialog
 
 import ca.ulaval.glo.model.CommentTag
 import ca.ulaval.glo.model.ReviewComment
@@ -7,21 +7,15 @@ import ca.ulaval.glo.model.getAllPresetReviewCommentDetails
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.components.JBCheckBox
-import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.components.JBTextArea
 import com.intellij.uiDesigner.core.AbstractLayout
 import com.intellij.util.ui.GridBag
-import com.intellij.util.ui.JBUI
-import com.intellij.util.ui.UIUtil
 import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.event.ActionListener
 import java.awt.event.ItemListener
-import java.awt.event.KeyEvent
-import java.awt.event.KeyListener
-import java.beans.PropertyChangeListener
 import javax.swing.JComponent
 import javax.swing.JPanel
 import javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
@@ -67,7 +61,7 @@ class EditCommentDialog() : DialogWrapper(true) {
 
         descriptionField.preferredSize = Dimension(550, 300)
         descriptionField.lineWrap = true
-        descriptionField.addKeyListener(SimpleKeyListener(fun() {
+        descriptionField.addKeyListener(SimpleKeyListener(fun(_) {
             selectedPreset = null
         }))
         val descriptionScrollPane =
@@ -80,11 +74,11 @@ class EditCommentDialog() : DialogWrapper(true) {
             .setDefaultFill(GridBagConstraints.HORIZONTAL)
         panel.minimumSize = Dimension(700, 400)
 
-        panel.add(label("Label"), gb.next())
+        panel.add(Label("Label"), gb.next())
         panel.add(presets, gb.nextLine().coverLine())
-        panel.add(label("Description"), gb.nextLine().coverLine())
+        panel.add(Label("Description"), gb.nextLine().coverLine())
         panel.add(descriptionScrollPane, gb.nextLine().coverLine())
-        panel.add(label("Tags"), gb.nextLine().next())
+        panel.add(Label("Tags"), gb.nextLine().next())
         CommentTag.values().forEach(fun(tag) {
             val checkbox = JBCheckBox(tag.getKey())
             checkbox.addActionListener(ActionListener(fun(event) {
@@ -117,14 +111,6 @@ class EditCommentDialog() : DialogWrapper(true) {
         })
     }
 
-    private fun label(text: String): JComponent {
-        val label = JBLabel(text)
-        label.componentStyle = UIUtil.ComponentStyle.LARGE
-        label.fontColor = UIUtil.FontColor.BRIGHTER
-        label.border = JBUI.Borders.empty(0, 5, 2, 0)
-        return label
-    }
-
     fun getDetails(): ReviewCommentDetails {
         return ReviewCommentDetails(getLabel(), getDescription(), getTags())
     }
@@ -141,18 +127,5 @@ class EditCommentDialog() : DialogWrapper(true) {
             if (entry.value.isSelected) selectedTags.add(entry.key)
         })
         return selectedTags
-    }
-
-    private class SimpleKeyListener(private val callback: () -> Unit) : KeyListener {
-        override fun keyTyped(p0: KeyEvent?) {
-        }
-
-        override fun keyPressed(p0: KeyEvent?) {
-        }
-
-        override fun keyReleased(p0: KeyEvent?) {
-            callback()
-        }
-
     }
 }
