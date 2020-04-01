@@ -28,7 +28,7 @@ class PresetReviewCommentDetails {
     )
     val cleanCodeC5CommentedOutCode = ReviewCommentDetails(
         "[C5] - Commented-Out Code",
-        "It makes me crazy to see stretches of code that are commented out. Who knows how old it is? Who knows whether or not it’s meaningful? Yet no one will delete it because everyone assumes someone else needs it or has plans for it.\nThat code sits there and rots, getting less and less relevant with every passing day. It calls functions that no longer exist. It uses variables whose names have changed. It follows conventions that are obsolete. It pollutes the modules that contain it and distracts the people who try to read it. Commented-out code is an abomination.",
+        "It makes me crazy to see stretches of code that are commented out. Who knows how old it is? Who knows whether or not it’s meaningful? Yet no one will delete it because everyone assumes someone else needs it or has plans for it. That code sits there and rots, getting less and less relevant with every passing day. It calls functions that no longer exist. It uses variables whose names have changed. It follows conventions that are obsolete. It pollutes the modules that contain it and distracts the people who try to read it. Commented-out code is an abomination.",
         CLEAN_CODE_TAGS
     )
     val cleanCodeE1BuildRequiresMoreThanOneStep = ReviewCommentDetails(
@@ -63,7 +63,7 @@ class PresetReviewCommentDetails {
     )
     val cleanCodeG1MultipleLanguagesInOneSourceFile = ReviewCommentDetails(
         "[G1] - Multiple Languages in One Source File",
-        "Today’s modern programming environments make it possible to put many different languages into a single source file. For example, a Java source file might contains snippets of XML, HTML, YAML, JavaDoc, English, JavaScript, and so on. For another example, in addition to HTML a JSP file might contain Java, a tag library syntax, English comments, Javadocs, XML, JavaScript, and so forth. This is confusing at best and carelessly sloppy at worst.\nThe ideal is for a source file to contain one, and only one, language. Realistically, we will probably have to use more than one. But we should take pains to minimize both the number and extent of extra languages in our source files.",
+        "Today’s modern programming environments make it possible to put many different languages into a single source file. For example, a Java source file might contains snippets of XML, HTML, YAML, JavaDoc, English, JavaScript, and so on. For another example, in addition to HTML a JSP file might contain Java, a tag library syntax, English comments, Javadocs, XML, JavaScript, and so forth. This is confusing at best and carelessly sloppy at worst. The ideal is for a source file to contain one, and only one, language. Realistically, we will probably have to use more than one. But we should take pains to minimize both the number and extent of extra languages in our source files.",
         CLEAN_CODE_TAGS
     )
     val cleanCodeG2ObviousBehaviorIsUnimplemented = ReviewCommentDetails(
@@ -73,7 +73,7 @@ class PresetReviewCommentDetails {
     )
     val cleanCodeG3IncorrectBehaviorAtTheBoundaries = ReviewCommentDetails(
         "[G3] - Incorrect Behavior at the Boundaries",
-        "It seems obvious to say that code should behave correctly. The problem is that we seldom realize just how complicated correct behavior is. Developers often write functions that they think will work, and then trust their intuition rather than going to the effort to prove that their works in all the corner and boundary cases.\nThere is no replacement for due diligence. Every boundary condition, every corner case, every quirk and exception represents something that can confound an elegant and intuitive algorithm. Don’t rely on your intuition. Look for every boundary condition and write a test for it.",
+        "It seems obvious to say that code should behave correctly. The problem is that we seldom realize just how complicated correct behavior is. Developers often write functions that they think will work, and then trust their intuition rather than going to the effort to prove that their works in all the corner and boundary cases. There is no replacement for due diligence. Every boundary condition, every corner case, every quirk and exception represents something that can confound an elegant and intuitive algorithm. Don’t rely on your intuition. Look for every boundary condition and write a test for it.",
         CLEAN_CODE_TAGS
     )
 
@@ -110,7 +110,7 @@ class PresetReviewCommentDetails {
     )
     val cleanCodeT7PatternsOfFailureAreRevealing = ReviewCommentDetails(
         "[T7] - Patterns of Failure Are Revealing",
-        "Sometimes you can diagnose a problem by finding patterns in the way the test cases fail. This is another argument for making the test cases as complete as possible. Complete test cases, ordered in a reasonable way, expose patterns.\nAs a simple example, suppose you noticed that all tests with an input larger than five characters failed? or what if any test that passed a negative number into a second argument of a function failed? Sometimes just seeing the pattern of red and green on the test report is enough to spark the “Aha!” that leads to the solution. Look page at page 267 to see an interesting example of this in the SerialDate example.",
+        "Sometimes you can diagnose a problem by finding patterns in the way the test cases fail. This is another argument for making the test cases as complete as possible. Complete test cases, ordered in a reasonable way, expose patterns. As a simple example, suppose you noticed that all tests with an input larger than five characters failed? or what if any test that passed a negative number into a second argument of a function failed? Sometimes just seeing the pattern of red and green on the test report is enough to spark the “Aha!” that leads to the solution. Look page at page 267 to see an interesting example of this in the SerialDate example.",
         CLEAN_CODE_TAGS
     )
     val cleanCodeT8TestCoveragePatternsCanBeRevealing = ReviewCommentDetails(

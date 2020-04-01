@@ -18,10 +18,7 @@ import com.intellij.util.ui.UIUtil
 import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
-import java.awt.event.ActionListener
-import java.awt.event.InputMethodListener
 import java.awt.event.ItemListener
-import java.awt.event.KeyListener
 import javax.swing.JComponent
 import javax.swing.JPanel
 import javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
@@ -30,6 +27,8 @@ import javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED
 class EditCommentDialog() : DialogWrapper(true) {
     // TODO: find a way to set focus on description field on open
     // TODO: add shortcuts for checkboxes + on key press focus text area
+    // TODO: make dropdown searchable
+    private var selectedPreset: ReviewCommentDetails? = null
     private val descriptionField = JBTextArea()
     private var tagFields = mutableMapOf<CommentTag, JBCheckBox>()
 
@@ -50,11 +49,28 @@ class EditCommentDialog() : DialogWrapper(true) {
         val presets = ComboBox(getAllPresetReviewCommentDetails())
         presets.selectedItem = null
         presets.isEditable = true
-        // TODO: make dropdown searchable
         presets.addItemListener(ItemListener(fun(event) {
             if (presets.selectedItem == event.item) {
-                // TODO: change description and tags
-                Messages.showInfoMessage(event.item.toString(), "item changed")
+                if (presets.selectedItem !is ReviewCommentDetails) {
+                    if (selectedPreset != null) {
+                        descriptionField.text = ""
+                        tagFields.values.forEach(fun(checkbox) {
+                            checkbox.isSelected = false
+                        })
+                        selectedPreset = null
+                    }
+                    return
+                }
+                val selectedItem = presets.selectedItem as ReviewCommentDetails
+                selectedPreset = selectedItem
+                descriptionField.text = selectedItem.description
+                tagFields.values.forEach(fun(checkbox) {
+                    checkbox.isSelected = false
+                })
+                selectedItem.tags.forEach(fun(tag) {
+                    val checkbox = tagFields[tag]
+                    if (checkbox != null) checkbox.isSelected = true
+                })
             }
         }))
 
