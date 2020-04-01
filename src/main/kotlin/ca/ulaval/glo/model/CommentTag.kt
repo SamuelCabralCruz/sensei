@@ -1,4 +1,4 @@
-package ca.ulaval.glo.persistence.review.state
+package ca.ulaval.glo.model
 
 enum class CommentTag(private val key: String, private val short: Char) {
     ARCHITECTURE("Architecture", 'A'),

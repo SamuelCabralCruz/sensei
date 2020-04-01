@@ -1,4 +1,4 @@
-package ca.ulaval.glo.persistence.review.state
+package ca.ulaval.glo.model
 
 class Review {
     var comments = mutableMapOf<String, MutableList<ReviewComment>>()

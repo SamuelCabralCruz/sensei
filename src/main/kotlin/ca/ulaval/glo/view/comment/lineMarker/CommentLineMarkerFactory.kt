@@ -2,7 +2,7 @@ package ca.ulaval.glo.view.comment.lineMarker
 
 import ca.ulaval.glo.action.EditCommentAction
 import ca.ulaval.glo.action.RemoveCommentAction
-import ca.ulaval.glo.persistence.review.state.ReviewComment
+import ca.ulaval.glo.model.ReviewComment
 import ca.ulaval.glo.util.prepend
 import ca.ulaval.glo.util.wrap
 import com.intellij.execution.lineMarker.LineMarkerActionWrapper

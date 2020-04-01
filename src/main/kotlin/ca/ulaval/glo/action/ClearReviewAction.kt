@@ -1,6 +1,6 @@
 package ca.ulaval.glo.action
 
-import ca.ulaval.glo.persistence.review.ReviewPersistence
+import ca.ulaval.glo.persistence.ReviewPersistence
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent

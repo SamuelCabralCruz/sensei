@@ -1,7 +1,7 @@
 package ca.ulaval.glo.action
 
-import ca.ulaval.glo.persistence.review.ReviewPersistence
-import ca.ulaval.glo.persistence.review.state.ReviewComment
+import ca.ulaval.glo.persistence.ReviewPersistence
+import ca.ulaval.glo.model.ReviewComment
 import ca.ulaval.glo.view.comment.EditCommentDialog
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.icons.AllIcons
@@ -9,7 +9,6 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.components.service
-import com.intellij.util.PlatformIcons
 
 class EditCommentAction(private val comment: ReviewComment) : AnAction("Edit comment", "", AllIcons.Actions.Edit) {
     override fun actionPerformed(e: AnActionEvent) {

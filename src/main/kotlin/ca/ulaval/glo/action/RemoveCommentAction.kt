@@ -1,7 +1,7 @@
 package ca.ulaval.glo.action
 
-import ca.ulaval.glo.persistence.review.ReviewPersistence
-import ca.ulaval.glo.persistence.review.state.ReviewComment
+import ca.ulaval.glo.persistence.ReviewPersistence
+import ca.ulaval.glo.model.ReviewComment
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.AnAction

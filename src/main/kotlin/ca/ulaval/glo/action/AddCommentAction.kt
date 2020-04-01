@@ -1,9 +1,9 @@
 package ca.ulaval.glo.action
 
-import ca.ulaval.glo.persistence.review.ReviewPersistence
-import ca.ulaval.glo.persistence.review.state.Review
-import ca.ulaval.glo.persistence.review.state.ReviewComment
-import ca.ulaval.glo.persistence.review.state.ReviewCommentDetails
+import ca.ulaval.glo.persistence.ReviewPersistence
+import ca.ulaval.glo.model.Review
+import ca.ulaval.glo.model.ReviewComment
+import ca.ulaval.glo.model.ReviewCommentDetails
 import ca.ulaval.glo.util.getRelativeFilePath
 import ca.ulaval.glo.view.comment.EditCommentDialog
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer

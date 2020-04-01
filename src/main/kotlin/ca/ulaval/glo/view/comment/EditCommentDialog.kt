@@ -1,8 +1,9 @@
 package ca.ulaval.glo.view.comment
 
-import ca.ulaval.glo.persistence.review.state.CommentTag
-import ca.ulaval.glo.persistence.review.state.ReviewComment
-import ca.ulaval.glo.persistence.review.state.ReviewCommentDetails
+import ca.ulaval.glo.model.CommentTag
+import ca.ulaval.glo.model.ReviewComment
+import ca.ulaval.glo.model.ReviewCommentDetails
+import ca.ulaval.glo.model.getAllPresetReviewCommentDetails
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.Messages
@@ -17,7 +18,10 @@ import com.intellij.util.ui.UIUtil
 import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
+import java.awt.event.ActionListener
+import java.awt.event.InputMethodListener
 import java.awt.event.ItemListener
+import java.awt.event.KeyListener
 import javax.swing.JComponent
 import javax.swing.JPanel
 import javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
@@ -43,8 +47,16 @@ class EditCommentDialog() : DialogWrapper(true) {
     }
 
     override fun createCenterPanel(): JComponent? {
-        // TODO: fill combo box with preset values
-        val presets = ComboBox(arrayOf("blank", "apple", "tomato"))
+        val presets = ComboBox(getAllPresetReviewCommentDetails())
+        presets.selectedItem = null
+        presets.isEditable = true
+        // TODO: make dropdown searchable
+        presets.addItemListener(ItemListener(fun(event) {
+            if (presets.selectedItem == event.item) {
+                // TODO: change description and tags
+                Messages.showInfoMessage(event.item.toString(), "item changed")
+            }
+        }))
 
         descriptionField.preferredSize = Dimension(550, 300)
         descriptionField.lineWrap = true
@@ -58,7 +70,7 @@ class EditCommentDialog() : DialogWrapper(true) {
             .setDefaultFill(GridBagConstraints.HORIZONTAL)
         panel.minimumSize = Dimension(700, 400)
 
-        panel.add(label("Select template"), gb.next())
+        panel.add(label("Label"), gb.next())
         panel.add(presets, gb.nextLine().coverLine())
         panel.add(label("Description"), gb.nextLine().coverLine())
         panel.add(descriptionScrollPane, gb.nextLine().coverLine())
@@ -68,13 +80,6 @@ class EditCommentDialog() : DialogWrapper(true) {
             tagFields[tag] = checkbox
             panel.add(checkbox, gb.next())
         })
-
-        presets.addItemListener(ItemListener(fun(event) {
-            if (presets.selectedItem == event.item) {
-                // TODO: change description and tags
-                Messages.showInfoMessage(event.item.toString(), "item changed")
-            }
-        }))
 
         return panel
     }
