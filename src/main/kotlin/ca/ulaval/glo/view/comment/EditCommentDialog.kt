@@ -19,6 +19,9 @@ import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.event.ActionListener
 import java.awt.event.ItemListener
+import java.awt.event.KeyEvent
+import java.awt.event.KeyListener
+import java.beans.PropertyChangeListener
 import javax.swing.JComponent
 import javax.swing.JPanel
 import javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
@@ -64,6 +67,9 @@ class EditCommentDialog() : DialogWrapper(true) {
 
         descriptionField.preferredSize = Dimension(550, 300)
         descriptionField.lineWrap = true
+        descriptionField.addKeyListener(SimpleKeyListener(fun() {
+            selectedPreset = null
+        }))
         val descriptionScrollPane =
             JBScrollPane(descriptionField, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_NEVER)
 
@@ -135,5 +141,18 @@ class EditCommentDialog() : DialogWrapper(true) {
             if (entry.value.isSelected) selectedTags.add(entry.key)
         })
         return selectedTags
+    }
+
+    private class SimpleKeyListener(private val callback: () -> Unit) : KeyListener {
+        override fun keyTyped(p0: KeyEvent?) {
+        }
+
+        override fun keyPressed(p0: KeyEvent?) {
+        }
+
+        override fun keyReleased(p0: KeyEvent?) {
+            callback()
+        }
+
     }
 }
