@@ -17,6 +17,7 @@ import com.intellij.util.ui.UIUtil
 import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
+import java.awt.event.ActionListener
 import java.awt.event.ItemListener
 import javax.swing.JComponent
 import javax.swing.JPanel
@@ -80,6 +81,9 @@ class EditCommentDialog() : DialogWrapper(true) {
         panel.add(label("Tags"), gb.nextLine().next())
         CommentTag.values().forEach(fun(tag) {
             val checkbox = JBCheckBox(tag.getKey())
+            checkbox.addActionListener(ActionListener(fun(event) {
+                selectedPreset = null
+            }))
             tagFields[tag] = checkbox
             panel.add(checkbox, gb.next())
         })
