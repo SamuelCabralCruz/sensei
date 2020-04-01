@@ -6,7 +6,6 @@ import ca.ulaval.glo.model.ReviewCommentDetails
 import ca.ulaval.glo.model.getAllPresetReviewCommentDetails
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.openapi.ui.Messages
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBScrollPane
@@ -29,15 +28,12 @@ class EditCommentDialog() : DialogWrapper(true) {
     // TODO: add shortcuts for checkboxes + on key press focus text area
     // TODO: make dropdown searchable
     private var selectedPreset: ReviewCommentDetails? = null
+    private val presets = ComboBox(getAllPresetReviewCommentDetails())
     private val descriptionField = JBTextArea()
     private var tagFields = mutableMapOf<CommentTag, JBCheckBox>()
 
-    constructor(comment: ReviewComment) : this() {
-        descriptionField.text = comment.details.description
-        comment.details.tags.forEach(fun(tag) {
-            val checkbox = tagFields[tag]
-            if (checkbox != null) checkbox.isSelected = true
-        })
+    constructor(reviewComment: ReviewComment) : this() {
+        fillFormWithReviewCommentDetails(reviewComment.details)
     }
 
     init {
@@ -46,31 +42,22 @@ class EditCommentDialog() : DialogWrapper(true) {
     }
 
     override fun createCenterPanel(): JComponent? {
-        val presets = ComboBox(getAllPresetReviewCommentDetails())
         presets.selectedItem = null
         presets.isEditable = true
         presets.addItemListener(ItemListener(fun(event) {
             if (presets.selectedItem == event.item) {
                 if (presets.selectedItem !is ReviewCommentDetails) {
                     if (selectedPreset != null) {
-                        descriptionField.text = ""
-                        tagFields.values.forEach(fun(checkbox) {
-                            checkbox.isSelected = false
-                        })
+                        clearDescription()
+                        clearTags()
                         selectedPreset = null
                     }
                     return
+                } else {
+                    val selectedItem = presets.selectedItem as ReviewCommentDetails
+                    selectedPreset = selectedItem
+                    fillFormWithReviewCommentDetails(selectedItem)
                 }
-                val selectedItem = presets.selectedItem as ReviewCommentDetails
-                selectedPreset = selectedItem
-                descriptionField.text = selectedItem.description
-                tagFields.values.forEach(fun(checkbox) {
-                    checkbox.isSelected = false
-                })
-                selectedItem.tags.forEach(fun(tag) {
-                    val checkbox = tagFields[tag]
-                    if (checkbox != null) checkbox.isSelected = true
-                })
             }
         }))
 
@@ -100,6 +87,26 @@ class EditCommentDialog() : DialogWrapper(true) {
         return panel
     }
 
+    private fun fillFormWithReviewCommentDetails(reviewCommentDetails: ReviewCommentDetails) {
+        presets.editor.item = reviewCommentDetails.label
+        descriptionField.text = reviewCommentDetails.description
+        clearTags()
+        reviewCommentDetails.tags.forEach(fun(tag) {
+            val checkbox = tagFields[tag]
+            if (checkbox != null) checkbox.isSelected = true
+        })
+    }
+
+    private fun clearDescription() {
+        descriptionField.text = ""
+    }
+
+    private fun clearTags() {
+        tagFields.values.forEach(fun(checkbox) {
+            checkbox.isSelected = false
+        })
+    }
+
     private fun label(text: String): JComponent {
         val label = JBLabel(text)
         label.componentStyle = UIUtil.ComponentStyle.LARGE
@@ -109,11 +116,10 @@ class EditCommentDialog() : DialogWrapper(true) {
     }
 
     fun getDetails(): ReviewCommentDetails {
-        val details = ReviewCommentDetails()
-        details.description = getDescription()
-        details.tags = getTags()
-        return details
+        return ReviewCommentDetails(getLabel(), getDescription(), getTags())
     }
+
+    private fun getLabel() = presets.editor.item.toString()
 
     private fun getDescription(): String {
         return descriptionField.text.trim().replace(Regex("[^\\S ]{2,}"), "\n")
