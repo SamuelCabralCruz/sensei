@@ -1,23 +1,21 @@
-package ca.ulaval.glo.view.dialog
+package ca.ulaval.glo.view.dialog.editComment
 
 import ca.ulaval.glo.model.CommentTag
 import ca.ulaval.glo.model.ReviewComment
 import ca.ulaval.glo.model.ReviewCommentDetails
 import ca.ulaval.glo.model.getAllPresetReviewCommentDetails
+import ca.ulaval.glo.view.dialog.Label
+import ca.ulaval.glo.view.dialog.Panel
+import ca.ulaval.glo.view.dialog.SimpleKeyListener
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.components.JBTextArea
-import com.intellij.uiDesigner.core.AbstractLayout
-import com.intellij.util.ui.GridBag
 import java.awt.Dimension
-import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
 import java.awt.event.ActionListener
 import java.awt.event.ItemListener
 import javax.swing.JComponent
-import javax.swing.JPanel
 import javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
 import javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED
 
@@ -40,6 +38,25 @@ class EditCommentDialog() : DialogWrapper(true) {
     }
 
     override fun createCenterPanel(): JComponent? {
+        val panel = Panel(700, 400, 5)
+        val gb = panel.gridBag
+        panel.add(Label("Label"), gb.next())
+        panel.add(createPresetSelector(), gb.nextLine().coverLine())
+        panel.add(Label("Description"), gb.nextLine().coverLine())
+        panel.add(createDescriptionField(), gb.nextLine().coverLine())
+        panel.add(Label("Tags"), gb.nextLine().next())
+        CommentTag.values().forEach(fun(tag) {
+            val checkbox = JBCheckBox(tag.getKey())
+            checkbox.addActionListener(ActionListener(fun(event) {
+                selectedPreset = null
+            }))
+            tagFields[tag] = checkbox
+            panel.add(checkbox, gb.next())
+        })
+        return panel
+    }
+
+    private fun createPresetSelector(): ComboBox<ReviewCommentDetails> {
         presets.selectedItem = null
         presets.isEditable = true
         presets.addItemListener(ItemListener(fun(event) {
@@ -58,37 +75,16 @@ class EditCommentDialog() : DialogWrapper(true) {
                 }
             }
         }))
+        return presets
+    }
 
+    private fun createDescriptionField(): JBScrollPane {
         descriptionField.preferredSize = Dimension(550, 300)
         descriptionField.lineWrap = true
         descriptionField.addKeyListener(SimpleKeyListener(fun(_) {
             selectedPreset = null
         }))
-        val descriptionScrollPane =
-            JBScrollPane(descriptionField, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_NEVER)
-
-        val panel = JPanel(GridBagLayout())
-        val gb = GridBag()
-            .setDefaultInsets(0, 5, AbstractLayout.DEFAULT_VGAP, AbstractLayout.DEFAULT_HGAP)
-            .setDefaultWeightX(1.0)
-            .setDefaultFill(GridBagConstraints.HORIZONTAL)
-        panel.minimumSize = Dimension(700, 400)
-
-        panel.add(Label("Label"), gb.next())
-        panel.add(presets, gb.nextLine().coverLine())
-        panel.add(Label("Description"), gb.nextLine().coverLine())
-        panel.add(descriptionScrollPane, gb.nextLine().coverLine())
-        panel.add(Label("Tags"), gb.nextLine().next())
-        CommentTag.values().forEach(fun(tag) {
-            val checkbox = JBCheckBox(tag.getKey())
-            checkbox.addActionListener(ActionListener(fun(event) {
-                selectedPreset = null
-            }))
-            tagFields[tag] = checkbox
-            panel.add(checkbox, gb.next())
-        })
-
-        return panel
+        return JBScrollPane(descriptionField, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_NEVER)
     }
 
     private fun fillFormWithReviewCommentDetails(reviewCommentDetails: ReviewCommentDetails) {

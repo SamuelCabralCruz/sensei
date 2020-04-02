@@ -21,11 +21,4 @@ class ReviewPersistence : PersistentStateComponent<Review> {
     override fun loadState(state: Review) {
         stateValue = state
     }
-
-    companion object {
-        @Obsolete
-        fun getInstance(project: Project): PersistentStateComponent<Review> {
-            return project.getService(ReviewPersistence::class.java)
-        }
-    }
 }

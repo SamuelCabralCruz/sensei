@@ -4,7 +4,7 @@ import ca.ulaval.glo.model.Review
 import ca.ulaval.glo.model.ReviewComment
 import ca.ulaval.glo.persistence.ReviewPersistence
 import ca.ulaval.glo.util.getRelativeFilePath
-import ca.ulaval.glo.view.dialog.EditCommentDialog
+import ca.ulaval.glo.view.dialog.editComment.EditCommentDialog
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -19,6 +19,13 @@ import java.lang.Integer.max
 import java.lang.Integer.min
 
 class AddCommentAction : AnAction() {
+    override fun update(e: AnActionEvent) {
+        val project = e.project ?: return
+        val review = project.service<ReviewPersistence>().state ?: return
+        val presentation = e.presentation
+        presentation.isEnabled = review.isOpened()
+    }
+
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
         val caret = e.getData(LangDataKeys.CARET) ?: return

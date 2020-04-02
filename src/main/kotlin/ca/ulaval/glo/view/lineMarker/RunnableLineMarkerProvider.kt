@@ -4,6 +4,7 @@ import ca.ulaval.glo.persistence.ReviewPersistence
 import ca.ulaval.glo.model.ReviewComment
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
+import com.intellij.openapi.components.service
 import com.intellij.openapi.util.text.StringUtil
 import com.intellij.psi.PsiElement
 
@@ -17,7 +18,7 @@ class RunnableLineMarkerProvider : LineMarkerProvider {
         result: MutableCollection<LineMarkerInfo<PsiElement>>
     ) {
         val project = elements[0].project
-        val reviewComments = ReviewPersistence.getInstance(project).state?.comments ?: return
+        val reviewComments = project.service<ReviewPersistence>().state?.comments ?: return
         val projectBasePath = project.basePath ?: return
         val containingFile = elements[0].containingFile
         val containingFileText = containingFile.text

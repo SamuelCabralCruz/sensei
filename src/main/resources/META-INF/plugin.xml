@@ -17,10 +17,14 @@
     <actions>
         <group id="sensei.actions" text="Sensei">
             <add-to-group group-id="MainMenu" anchor="last"/>
+            <!-- TODO: remove shortcuts create and delete reviews -->
+            <action class="ca.ulaval.glo.action.CreateReviewAction" id="sensei.actions.createReview" text="Create Review">
+                <keyboard-shortcut first-keystroke="control shift F3" keymap="$default" replace-all="true"/>
+            </action>
             <action class="ca.ulaval.glo.action.AddCommentAction" id="sensei.actions.addComment" text="Add Comment">
                 <keyboard-shortcut first-keystroke="control shift F4" keymap="$default" replace-all="true"/>
             </action>
-            <action class="ca.ulaval.glo.action.ClearReviewAction" id="sensei.actions.clearReview" text="Clear Review">
+            <action class="ca.ulaval.glo.action.DeleteReviewAction" id="sensei.actions.deleteReview" text="Delete Review">
                 <keyboard-shortcut first-keystroke="control shift F5" keymap="$default" replace-all="true"/>
             </action>
         </group>

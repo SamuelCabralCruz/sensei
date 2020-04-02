@@ -2,7 +2,7 @@ package ca.ulaval.glo.action
 
 import ca.ulaval.glo.persistence.ReviewPersistence
 import ca.ulaval.glo.model.ReviewComment
-import ca.ulaval.glo.view.dialog.EditCommentDialog
+import ca.ulaval.glo.view.dialog.editComment.EditCommentDialog
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.AnAction

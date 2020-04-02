@@ -1,10 +1,27 @@
 package ca.ulaval.glo.model
 
 class Review {
+    var status: ReviewStatus? = null
+    var details = ReviewDetails()
     var comments = mutableMapOf<String, MutableList<ReviewComment>>()
 
-    fun getFileReviewComments(filePath: String): MutableList<ReviewComment> {
-        return comments.getOrDefault(filePath, mutableListOf())
+    fun isCreated(): Boolean {
+        return status != null
+    }
+
+    fun isOpened(): Boolean {
+        return isCreated() && status == ReviewStatus.OPENED
+    }
+
+    fun create(reviewDetails: ReviewDetails) {
+        status = ReviewStatus.OPENED
+        details = reviewDetails
+    }
+
+    fun delete() {
+        status = null
+        details.reset()
+        comments = mutableMapOf()
     }
 
     fun addComment(commentToAdd: ReviewComment) {
@@ -26,5 +43,9 @@ class Review {
     fun replaceComment(oldComment: ReviewComment, newComment: ReviewComment) {
         removeComment(oldComment)
         addComment(newComment)
+    }
+
+    private fun getFileReviewComments(filePath: String): MutableList<ReviewComment> {
+        return comments.getOrDefault(filePath, mutableListOf())
     }
 }
