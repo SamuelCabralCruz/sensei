@@ -1,7 +1,7 @@
 package ca.ulaval.glo.action
 
-import ca.ulaval.glo.persistence.ReviewPersistence
 import ca.ulaval.glo.model.ReviewComment
+import ca.ulaval.glo.persistence.ReviewPersistence
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.AnAction
@@ -12,6 +12,13 @@ import com.intellij.openapi.ui.Messages
 
 class RemoveCommentAction(private val comment: ReviewComment) :
     AnAction("Remove comment", "", AllIcons.General.Remove) {
+    override fun update(e: AnActionEvent) {
+        val project = e.project ?: return
+        val review = project.service<ReviewPersistence>().state ?: return
+        val presentation = e.presentation
+        presentation.isEnabled = review.isOpened()
+    }
+
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
         val review = project.service<ReviewPersistence>().state ?: return

@@ -18,6 +18,10 @@ class Review {
         details = reviewDetails
     }
 
+    fun close() {
+        status = ReviewStatus.CLOSED
+    }
+
     fun delete() {
         status = null
         details.reset()
