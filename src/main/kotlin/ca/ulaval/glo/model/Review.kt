@@ -13,6 +13,10 @@ class Review {
         return isCreated() && status == ReviewStatus.OPENED
     }
 
+    fun isClosed(): Boolean {
+        return isCreated() && status == ReviewStatus.CLOSED
+    }
+
     fun create(reviewDetails: ReviewDetails) {
         status = ReviewStatus.OPENED
         details = reviewDetails
@@ -20,6 +24,10 @@ class Review {
 
     fun close() {
         status = ReviewStatus.CLOSED
+    }
+
+    fun reopen() {
+        status = ReviewStatus.OPENED
     }
 
     fun delete() {

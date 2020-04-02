@@ -26,6 +26,9 @@
             <action class="ca.ulaval.glo.action.CloseReviewAction" id="sensei.actions.closeReview"
                     text="Close Review">
             </action>
+            <action class="ca.ulaval.glo.action.ReopenReviewAction" id="sensei.actions.reopenReview"
+                    text="Reopen Review">
+            </action>
             <action class="ca.ulaval.glo.action.DeleteReviewAction" id="sensei.actions.deleteReview"
                     text="Delete Review">
             </action>
