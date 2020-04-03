@@ -70,7 +70,7 @@ class Review {
         return comments.getOrDefault(filePath, mutableListOf())
     }
 
-    fun generateReport() {
-        ReportGenerator().generate("$projectBasePath/sensei/reports")
+    fun generateReport(outputPath: String) {
+        ReportGenerator().generate(this, outputPath)
     }
 }
