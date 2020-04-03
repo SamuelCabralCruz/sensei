@@ -21,3 +21,11 @@ fun deleteDirectory(_path: String) {
     }
     directoryToBeDeleted.delete()
 }
+
+fun replaceInFile(_path: String, oldText: String, newText: String) {
+    val path = Paths.get(_path)
+    if (!Files.exists(path)) return
+    val content = String(Files.readAllBytes(path))
+    val editedContent = content.replace(oldText, newText)
+    Files.write(path, editedContent.toByteArray())
+}

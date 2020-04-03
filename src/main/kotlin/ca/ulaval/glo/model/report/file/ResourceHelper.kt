@@ -1,7 +1,9 @@
 package ca.ulaval.glo.model.report.file
 
 import ca.ulaval.glo.model.report.file.filter.AcceptAllFileFilter
-import java.io.*
+import java.io.File
+import java.io.FileFilter
+import java.io.FileOutputStream
 import java.util.*
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
@@ -41,14 +43,12 @@ private fun getResourcesEntries(classLoader: ClassLoader, resourcePath: String):
 
 fun copyResourceFile(classLoader: ClassLoader, resourcePath: String, outputPath: String) {
     val inputStream = classLoader.getResourceAsStream(resourcePath) ?: return
-    val inputStreamReader = BufferedReader(InputStreamReader(inputStream)).readLines()
+    val inputStreamReader = inputStream.readBytes()
     val pathPartition = resourcePath.split("/")
     val parentDirectory = pathPartition.subList(0, pathPartition.lastIndex).joinToString("/")
     createDirectories("$outputPath/$parentDirectory")
     val outputStream = FileOutputStream(File("$outputPath/$resourcePath"))
-    inputStreamReader.forEach(fun(line) {
-        outputStream.write(("$line\n").toByteArray())
-    })
+    outputStream.write(inputStreamReader)
     outputStream.flush()
     outputStream.close()
 }

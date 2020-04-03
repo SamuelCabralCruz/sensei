@@ -2,7 +2,7 @@ package ca.ulaval.glo.model.report.html.node
 
 import ca.ulaval.glo.model.report.html.HtmlBuffer
 
-class Body() : HtmlNode() {
+class Body : HtmlNode() {
     override fun openTag(buffer: HtmlBuffer) {
         buffer.append("<body>")
         buffer.increaseIndent()
