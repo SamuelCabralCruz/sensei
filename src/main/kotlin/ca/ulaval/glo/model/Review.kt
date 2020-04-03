@@ -1,7 +1,11 @@
 package ca.ulaval.glo.model
 
+import ca.ulaval.glo.model.report.ReportGenerator
+import com.intellij.openapi.project.Project
+
 class Review {
     var status: ReviewStatus? = null
+    var projectBasePath: String? = null
     var details = ReviewDetails()
     var comments = mutableMapOf<String, MutableList<ReviewComment>>()
 
@@ -17,8 +21,13 @@ class Review {
         return isCreated() && status == ReviewStatus.CLOSED
     }
 
-    fun create(reviewDetails: ReviewDetails) {
+    fun isNotEmpty(): Boolean {
+        return isCreated() && comments.isNotEmpty()
+    }
+
+    fun create(project: Project, reviewDetails: ReviewDetails) {
         status = ReviewStatus.OPENED
+        projectBasePath = project.basePath
         details = reviewDetails
     }
 
@@ -59,5 +68,9 @@ class Review {
 
     private fun getFileReviewComments(filePath: String): MutableList<ReviewComment> {
         return comments.getOrDefault(filePath, mutableListOf())
+    }
+
+    fun generateReport() {
+        ReportGenerator().generate("$projectBasePath/sensei/reports")
     }
 }

@@ -1,26 +1,23 @@
 package ca.ulaval.glo.action
 
 import ca.ulaval.glo.persistence.ReviewPersistence
-import ca.ulaval.glo.view.dialog.editReview.EditReviewDialog
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
 
-class CreateReviewAction : AnAction() {
+class GenerateReportAction : AnAction() {
     override fun update(e: AnActionEvent) {
         val project = e.project ?: return
         val review = project.service<ReviewPersistence>().state ?: return
         val presentation = e.presentation
-        presentation.isEnabled = !review.isCreated()
+        presentation.isEnabled = review.isNotEmpty()
     }
 
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
         val review = project.service<ReviewPersistence>().state ?: return
-
-        val editReviewDialog = EditReviewDialog()
-        if (editReviewDialog.showAndGet()) {
-            review.create(project, editReviewDialog.getDetails())
-        }
+        review.generateReport()
+        // TODO: add open in browser command or popup message to indicate location of report
+        // TODO: also add dont show this again (NICE TO HAVE)
     }
 }

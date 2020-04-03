@@ -2,7 +2,7 @@
     <id>ca.ulaval.glo.sensei</id>
     <name>Sensei - Code Reviews</name>
     <vendor email="samuelcabralcruz@gmail.com" url="https://github.com/SamuelCabralCruz/sensei">Sensei</vendor>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
 
     <description><![CDATA[TODO - placeholder description to be modified later]]></description>
 
@@ -22,6 +22,10 @@
             </action>
             <action class="ca.ulaval.glo.action.AddCommentAction" id="sensei.actions.addComment" text="Add Comment">
                 <keyboard-shortcut first-keystroke="control shift F4" keymap="$default" replace-all="true"/>
+            </action>
+            <action class="ca.ulaval.glo.action.GenerateReportAction" id="sensei.actions.generateReport"
+                    text="Generate Report">
+                <keyboard-shortcut first-keystroke="control shift F5" keymap="$default" replace-all="true"/>
             </action>
             <action class="ca.ulaval.glo.action.CloseReviewAction" id="sensei.actions.closeReview"
                     text="Close Review">
