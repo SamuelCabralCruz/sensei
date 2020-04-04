@@ -36,8 +36,11 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
                 buffer.append("<div class='file-comment'>")
                 buffer.increaseIndent()
                 buffer.append("<p>Line ${fileComment.startingLine} - ${fileComment.details.label}</p>")
+                fileComment.details.tags.forEach(fun(tag) {
+                    val tagClassName = tag.value.toLowerCase().split(" ").joinToString("-")
+                    buffer.append("<span class='badge $tagClassName'>${tag.value}</span>")
+                })
                 buffer.append("<p>${fileComment.details.description}</p>")
-                buffer.append("<p>${fileComment.details.tags}</p>")
                 buffer.decreaseIndent()
                 buffer.append("</div>")
                 buffer.decreaseIndent()
