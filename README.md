@@ -83,3 +83,29 @@
             ...
         }
         ```
+    - Remove right padding
+        ```css
+        code[class*="language"] {
+            ...
+            padding: 0 1em;
+            ...
+        }
+        ```
+    - Remove margin pre tag
+        ```css
+        pre[class*="language-"] {
+            ...
+            margin: 0;
+            ...
+        }
+      
+        /* Margin bottom to accommodate shadow */
+        :not(pre) > code[class*="language-"],
+        pre[class*="language-"] {
+            background-color: #fdfdfd;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            margin-bottom: 1em;
+        }
+        ```

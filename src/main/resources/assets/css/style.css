@@ -12,8 +12,8 @@ body {
     grid-template-columns: 1fr 1fr;
 }
 
-.comments-panel {
-    background: red;
+/* Remove scroll bars */
+.comments-panel, .snippets-panel {
     overflow-y: auto;
     /* FireFox */
     scrollbar-width: none;
@@ -21,9 +21,14 @@ body {
     -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
-.comments-panel::-webkit-scrollbar {
+.comments-panel::-webkit-scrollbar, .snippets-panel::-webkit-scrollbar {
     /* Chrome, Safari, Edge */
     display: none;
+}
+
+.comments-panel {
+    background: red;
+    padding: 1em;
 }
 
 .comment-summary {
