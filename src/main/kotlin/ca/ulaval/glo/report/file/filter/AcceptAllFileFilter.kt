@@ -1,4 +1,4 @@
-package ca.ulaval.glo.model.report.file.filter
+package ca.ulaval.glo.report.file.filter
 
 import java.io.File
 import java.io.FileFilter

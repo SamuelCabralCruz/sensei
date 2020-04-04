@@ -1,4 +1,4 @@
-package ca.ulaval.glo.model.report.file.comparator
+package ca.ulaval.glo.report.file.comparator
 
 class PathStructure(
     val fullPath: String,

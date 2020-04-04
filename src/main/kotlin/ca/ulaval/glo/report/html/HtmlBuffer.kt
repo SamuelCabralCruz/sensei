@@ -1,4 +1,4 @@
-package ca.ulaval.glo.model.report.html
+package ca.ulaval.glo.report.html
 
 import java.io.BufferedWriter
 import java.io.File

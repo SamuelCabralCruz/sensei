@@ -1,4 +1,4 @@
-package ca.ulaval.glo.model.report.file.comparator
+package ca.ulaval.glo.report.file.comparator
 
 class DefaultPathStructureComparator : PathStructureComparator {
     override fun isApplicable(p0: PathStructure, p1: PathStructure): Boolean {

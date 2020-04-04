@@ -1,4 +1,4 @@
-package ca.ulaval.glo.model.report.file.comparator
+package ca.ulaval.glo.report.file.comparator
 
 interface PathStructureComparator : Comparator<PathStructure> {
     fun isApplicable(p0: PathStructure, p1: PathStructure): Boolean

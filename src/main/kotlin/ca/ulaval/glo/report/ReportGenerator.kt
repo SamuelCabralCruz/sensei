@@ -1,12 +1,12 @@
-package ca.ulaval.glo.model.report
+package ca.ulaval.glo.report
 
 import ca.ulaval.glo.model.Review
-import ca.ulaval.glo.model.report.file.copyResourcesRecursively
-import ca.ulaval.glo.model.report.file.createDirectories
-import ca.ulaval.glo.model.report.file.deleteDirectory
-import ca.ulaval.glo.model.report.file.replaceInFile
-import ca.ulaval.glo.model.report.html.HtmlBuffer
-import ca.ulaval.glo.model.report.html.node.*
+import ca.ulaval.glo.report.file.copyResourcesRecursively
+import ca.ulaval.glo.report.file.createDirectories
+import ca.ulaval.glo.report.file.deleteDirectory
+import ca.ulaval.glo.report.file.replaceInFile
+import ca.ulaval.glo.report.html.HtmlBuffer
+import ca.ulaval.glo.report.html.node.*
 
 class ReportGenerator {
     fun generate(review: Review, outputPath: String) {

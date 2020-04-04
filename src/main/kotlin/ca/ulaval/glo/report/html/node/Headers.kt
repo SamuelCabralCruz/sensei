@@ -1,9 +1,9 @@
-package ca.ulaval.glo.model.report.html.node
+package ca.ulaval.glo.report.html.node
 
-import ca.ulaval.glo.model.report.file.filter.CssFileFilter
-import ca.ulaval.glo.model.report.file.filter.JsFileFilter
-import ca.ulaval.glo.model.report.file.getAllResourcesPathRecursively
-import ca.ulaval.glo.model.report.html.HtmlBuffer
+import ca.ulaval.glo.report.file.filter.CssFileFilter
+import ca.ulaval.glo.report.file.filter.JsFileFilter
+import ca.ulaval.glo.report.file.getAllResourcesPathRecursively
+import ca.ulaval.glo.report.html.HtmlBuffer
 
 class Headers(private val title: String) : HtmlNode() {
     override fun openTag(buffer: HtmlBuffer) {

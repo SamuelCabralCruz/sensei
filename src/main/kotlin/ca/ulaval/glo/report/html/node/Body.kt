@@ -1,6 +1,6 @@
-package ca.ulaval.glo.model.report.html.node
+package ca.ulaval.glo.report.html.node
 
-import ca.ulaval.glo.model.report.html.HtmlBuffer
+import ca.ulaval.glo.report.html.HtmlBuffer
 
 class Body : HtmlNode() {
     override fun openTag(buffer: HtmlBuffer) {

@@ -1,11 +1,11 @@
-package ca.ulaval.glo.model.report.file.filter
+package ca.ulaval.glo.report.file.filter
 
 import java.io.File
 import java.io.FileFilter
 
-class JsFileFilter : FileFilter {
+class CssFileFilter : FileFilter {
     override fun accept(file: File?): Boolean {
         file ?: return false
-        return file.path.endsWith(".js")
+        return file.path.endsWith(".css")
     }
 }

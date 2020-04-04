@@ -10,7 +10,6 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.components.service
-import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.TextRange
@@ -34,13 +33,15 @@ class AddCommentAction : AnAction() {
         val containingFile = e.getData(LangDataKeys.PSI_FILE)?.originalFile ?: return
         val review = project.service<ReviewPersistence>().state ?: return
 
-        val codeSnippet = getCodeSnippet(caret, editor)
+        val chunkLineRange = IntRange(caret.selectionStartPosition.line, caret.selectionEndPosition.line)
+        val (startingLine, codeSnippet) = getCodeSnippet(chunkLineRange, editor)
         val editCommentDialog = EditCommentDialog()
         if (editCommentDialog.showAndGet()) {
             val reviewComment =
                 ReviewComment(
                     getRelativeFilePath(project, virtualFile),
-                    caret.selectionStartPosition.line,
+                    startingLine,
+                    chunkLineRange,
                     codeSnippet,
                     editCommentDialog.getDetails()
                 )
@@ -49,17 +50,15 @@ class AddCommentAction : AnAction() {
     }
 
     private fun getCodeSnippet(
-        caret: Caret,
+        chunkLineRange: IntRange,
         editor: Editor
-    ): String {
-        val chunkStartLine = caret.selectionStartPosition.line
-        val chunkEndLine = caret.selectionEndPosition.line
-        val selectionStartLine = max(chunkStartLine - 10, 0)
-        val selectionEndLine = min(chunkEndLine + 10, editor.document.lineCount - 1)
+    ): Pair<Int, String> {
+        val selectionStartLine = max(chunkLineRange.first - 10, 0)
+        val selectionEndLine = min(chunkLineRange.last + 10, editor.document.lineCount - 1)
         val startOffset = editor.document.getLineStartOffset(selectionStartLine)
         val endOffset = editor.document.getLineEndOffset(selectionEndLine)
         val textRange = TextRange.from(startOffset, endOffset - startOffset)
-        return editor.document.getText(textRange)
+        return Pair(selectionStartLine, editor.document.getText(textRange))
     }
 
     private fun persistReviewComment(

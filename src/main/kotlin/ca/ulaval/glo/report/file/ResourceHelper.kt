@@ -1,6 +1,6 @@
-package ca.ulaval.glo.model.report.file
+package ca.ulaval.glo.report.file
 
-import ca.ulaval.glo.model.report.file.filter.AcceptAllFileFilter
+import ca.ulaval.glo.report.file.filter.AcceptAllFileFilter
 import java.io.File
 import java.io.FileFilter
 import java.io.FileOutputStream

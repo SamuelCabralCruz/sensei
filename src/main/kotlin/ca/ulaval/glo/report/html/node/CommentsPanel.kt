@@ -1,8 +1,8 @@
-package ca.ulaval.glo.model.report.html.node
+package ca.ulaval.glo.report.html.node
 
 import ca.ulaval.glo.model.Review
-import ca.ulaval.glo.model.report.file.comparator.GroupSourceAndTestFilesPathComparator
-import ca.ulaval.glo.model.report.html.HtmlBuffer
+import ca.ulaval.glo.report.file.comparator.GroupSourceAndTestFilesPathComparator
+import ca.ulaval.glo.report.html.HtmlBuffer
 
 class CommentsPanel(private val review: Review) : HtmlNode() {
     override fun openTag(buffer: HtmlBuffer) {

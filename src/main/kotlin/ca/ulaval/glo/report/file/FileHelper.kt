@@ -1,4 +1,4 @@
-package ca.ulaval.glo.model.report.file
+package ca.ulaval.glo.report.file
 
 import java.io.File
 import java.nio.file.Files

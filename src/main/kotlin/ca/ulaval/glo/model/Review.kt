@@ -1,6 +1,6 @@
 package ca.ulaval.glo.model
 
-import ca.ulaval.glo.model.report.ReportGenerator
+import ca.ulaval.glo.report.ReportGenerator
 import com.intellij.openapi.project.Project
 
 class Review {

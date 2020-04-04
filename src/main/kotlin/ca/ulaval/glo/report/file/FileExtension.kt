@@ -1,4 +1,4 @@
-package ca.ulaval.glo.model.report.file
+package ca.ulaval.glo.report.file
 
 enum class FileExtension(val values: List<String>) {
     JAVA(listOf("java"));

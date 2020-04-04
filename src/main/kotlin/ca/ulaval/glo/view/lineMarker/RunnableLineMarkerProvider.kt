@@ -27,9 +27,9 @@ class RunnableLineMarkerProvider : LineMarkerProvider {
         val reviewCommentsForCurrentFile = reviewComments[currentFileRelativePath] ?: return
         val reviewCommentsForCurrentFileByLine = mutableMapOf<Int, MutableList<ReviewComment>>()
         reviewCommentsForCurrentFile.forEach(fun(reviewComment) {
-            val lineReviewComments = reviewCommentsForCurrentFileByLine[reviewComment.startingLine] ?: mutableListOf()
+            val lineReviewComments = reviewCommentsForCurrentFileByLine[reviewComment.highlight.first] ?: mutableListOf()
             lineReviewComments.add(reviewComment)
-            reviewCommentsForCurrentFileByLine[reviewComment.startingLine] = lineReviewComments
+            reviewCommentsForCurrentFileByLine[reviewComment.highlight.first] = lineReviewComments
         })
         elements.forEach(fun(element) {
             val elementLine = StringUtil.offsetToLineNumber(containingFileText, element.textRange.startOffset)

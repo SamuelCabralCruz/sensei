@@ -1,6 +1,6 @@
-package ca.ulaval.glo.model.report.file.comparator
+package ca.ulaval.glo.report.file.comparator
 
-import ca.ulaval.glo.model.report.file.FileExtension.JAVA
+import ca.ulaval.glo.report.file.FileExtension.JAVA
 
 class JavaPackagePathStructureComparator : PathStructureComparator {
     override fun isApplicable(p0: PathStructure, p1: PathStructure): Boolean {
