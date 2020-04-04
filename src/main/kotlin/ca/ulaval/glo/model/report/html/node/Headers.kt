@@ -1,6 +1,7 @@
 package ca.ulaval.glo.model.report.html.node
 
 import ca.ulaval.glo.model.report.file.filter.CssFileFilter
+import ca.ulaval.glo.model.report.file.filter.JsFileFilter
 import ca.ulaval.glo.model.report.file.getAllResourcesPathRecursively
 import ca.ulaval.glo.model.report.html.HtmlBuffer
 
@@ -9,8 +10,8 @@ class Headers(private val title: String) : HtmlNode() {
         buffer.append("<head>")
         buffer.increaseIndent()
         appendTitle(buffer)
-        appendCssFiles(buffer);
-        // TODO copyJsFiles();
+        appendCssFiles(buffer)
+        appendJsFiles(buffer)
         appendMeta(buffer)
     }
 
@@ -29,7 +30,15 @@ class Headers(private val title: String) : HtmlNode() {
                 CssFileFilter()
             )
         cssResources.forEach(fun(cssResource) {
-            buffer.append("<link rel='stylesheet' href='$cssResource'>")
+            buffer.append("<link rel='stylesheet' href='$cssResource'/>")
+        })
+    }
+
+    private fun appendJsFiles(buffer: HtmlBuffer) {
+        val jsResources =
+            getAllResourcesPathRecursively(this.javaClass.classLoader, "assets", JsFileFilter())
+        jsResources.forEach(fun(jsResource) {
+            buffer.append("<script src='$jsResource'></script>")
         })
     }
 

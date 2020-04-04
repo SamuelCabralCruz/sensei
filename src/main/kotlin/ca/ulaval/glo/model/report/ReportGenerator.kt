@@ -18,7 +18,7 @@ class ReportGenerator {
             .addChild(
                 Body()
                     .addChild(CommentsPanel(review))
-                    .addChild(SnippetsPanel())
+                    .addChild(SnippetsPanel(review))
             ).output(htmlBuffer)
         htmlBuffer.saveToFile("$outputPath/index.html")
     }
