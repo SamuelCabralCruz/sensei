@@ -13,12 +13,11 @@ class ReportGenerator {
         setUpOutputDirectory(outputPath)
         prepareAssets(outputPath)
         val htmlBuffer = HtmlBuffer()
-        val title = review.details.evaluationName!!
         Root()
-            .addChild(Headers(title))
+            .addChild(Headers(review.details.evaluationName!!))
             .addChild(
                 Body()
-                    .addChild(CommentsPanel(title))
+                    .addChild(CommentsPanel(review))
                     .addChild(SnippetsPanel())
             ).output(htmlBuffer)
         htmlBuffer.saveToFile("$outputPath/index.html")

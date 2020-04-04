@@ -1,20 +1,55 @@
 package ca.ulaval.glo.model.report.html.node
 
+import ca.ulaval.glo.model.Review
+import ca.ulaval.glo.model.report.file.comparator.GroupSourceAndTestFilesPathComparator
 import ca.ulaval.glo.model.report.html.HtmlBuffer
 
-class CommentsPanel(private val title: String) : HtmlNode() {
+class CommentsPanel(private val review: Review) : HtmlNode() {
     override fun openTag(buffer: HtmlBuffer) {
         buffer.append("<div class='comments-panel'>")
         buffer.increaseIndent()
         appendTitle(buffer)
+        appendComments(buffer)
     }
 
     private fun appendTitle(buffer: HtmlBuffer) {
         buffer.append("<h1>")
         buffer.increaseIndent()
-        buffer.append(title)
+        buffer.append(review.details.evaluationName!!)
         buffer.decreaseIndent()
         buffer.append("</h1>")
+    }
+
+    private fun appendComments(buffer: HtmlBuffer) {
+        buffer.append("<div class='file-comments'>")
+        buffer.increaseIndent()
+        review.comments.toSortedMap(GroupSourceAndTestFilesPathComparator()).forEach(fun(fileName, fileComments) {
+            buffer.append("<details class='comment'>")
+            buffer.increaseIndent()
+            buffer.append("<summary class='comment-summary'>$fileName</summary>")
+            buffer.append("<ul>")
+            buffer.increaseIndent()
+            fileComments.sortBy { it.startingLine }
+            fileComments.forEach(fun(fileComment) {
+                buffer.append("<li>")
+                buffer.increaseIndent()
+                buffer.append("<div class='file-comment'>")
+                buffer.increaseIndent()
+                buffer.append("<p>Line ${fileComment.startingLine} - ${fileComment.details.label}</p>")
+                buffer.append("<p>${fileComment.details.description}</p>")
+                buffer.append("<p>${fileComment.details.tags}</p>")
+                buffer.decreaseIndent()
+                buffer.append("</div>")
+                buffer.decreaseIndent()
+                buffer.append("</li>")
+            })
+            buffer.decreaseIndent()
+            buffer.append("</ul>")
+            buffer.decreaseIndent()
+            buffer.append("</details>")
+        })
+        buffer.decreaseIndent()
+        buffer.append("</div>")
     }
 
     override fun closeTag(buffer: HtmlBuffer) {
