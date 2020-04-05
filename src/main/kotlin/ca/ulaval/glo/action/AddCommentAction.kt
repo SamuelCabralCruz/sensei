@@ -10,7 +10,7 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.components.service
-import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.editor.Document
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiFile
@@ -29,15 +29,18 @@ class AddCommentAction : AnAction() {
         val project = e.project ?: return
         val caret = e.getData(LangDataKeys.CARET) ?: return
         val editor = e.getData(LangDataKeys.EDITOR) ?: return
+        val document = editor.document
         val virtualFile = e.getData(LangDataKeys.VIRTUAL_FILE) ?: return
         val containingFile = e.getData(LangDataKeys.PSI_FILE)?.originalFile ?: return
         val review = project.service<ReviewPersistence>().state ?: return
 
         val selectionStartingLine = editor.visualToLogicalPosition(caret.selectionStartPosition).line + 1
         val selectionEndingLine = editor.visualToLogicalPosition(caret.selectionEndPosition).line + 1
+        val selectionText = getTextForLines(document, selectionStartingLine, selectionEndingLine)
+        if (selectionText.isBlank()) return
         val chunkLineRange = IntRange(selectionStartingLine, selectionEndingLine)
-        val (startingLine, codeSnippet) = getCodeSnippet(chunkLineRange, editor)
-        if (codeSnippet.isEmpty()) return
+        val (startingLine, codeSnippet) = getCodeSnippet(chunkLineRange, document)
+        if (codeSnippet.isBlank()) return
         val editCommentDialog = EditCommentDialog()
         if (editCommentDialog.showAndGet()) {
             val reviewComment =
@@ -54,14 +57,23 @@ class AddCommentAction : AnAction() {
 
     private fun getCodeSnippet(
         chunkLineRange: IntRange,
-        editor: Editor
+        document: Document
     ): Pair<Int, String> {
         val selectionStartLine = max(chunkLineRange.first - 10, 1)
-        val selectionEndLine = min(chunkLineRange.last + 10, editor.document.lineCount)
-        val startOffset = editor.document.getLineStartOffset(selectionStartLine - 1)
-        val endOffset = editor.document.getLineEndOffset(selectionEndLine - 1)
+        val selectionEndLine = min(chunkLineRange.last + 10, document.lineCount)
+        val codeSnippet = getTextForLines(document, selectionStartLine, selectionEndLine)
+        return normalizeWhiteSpaces(selectionStartLine, codeSnippet)
+    }
+
+    private fun getTextForLines(
+        document: Document,
+        startLine: Int,
+        endLine: Int
+    ): String {
+        val startOffset = document.getLineStartOffset(startLine - 1)
+        val endOffset = document.getLineEndOffset(endLine - 1)
         val textRange = TextRange.from(startOffset, endOffset - startOffset)
-        return normalizeWhiteSpaces(selectionStartLine, editor.document.getText(textRange))
+        return document.getText(textRange)
     }
 
     private fun normalizeWhiteSpaces(startingLine: Int, codeSnippet: String): Pair<Int, String> {
