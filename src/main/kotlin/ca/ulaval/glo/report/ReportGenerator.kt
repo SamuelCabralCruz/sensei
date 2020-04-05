@@ -14,7 +14,7 @@ class ReportGenerator {
         prepareAssets(outputPath)
         val htmlBuffer = HtmlBuffer()
         Root()
-            .addChild(Headers(review.details.evaluationName!!))
+            .addChild(Headers())
             .addChild(
                 Body()
                     .addChild(CommentsPanel(review))

@@ -14,4 +14,7 @@ class ReviewCommentDetails() : ValueObject() {
     fun clone(): ReviewCommentDetails {
         return ReviewCommentDetails(label, description, tags.toMutableList())
     }
+
+    // TODO: IMPORTANT for combo box populating
+    override fun toString(): String = label
 }

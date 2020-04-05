@@ -5,7 +5,7 @@ import ca.ulaval.glo.report.file.filter.JsFileFilter
 import ca.ulaval.glo.report.file.getAllResourcesPathRecursively
 import ca.ulaval.glo.report.html.HtmlBuffer
 
-class Headers(private val title: String) : HtmlNode() {
+class Headers() : HtmlNode() {
     override fun openTag(buffer: HtmlBuffer) {
         buffer.append("<head>")
         buffer.increaseIndent()
@@ -18,7 +18,7 @@ class Headers(private val title: String) : HtmlNode() {
     private fun appendTitle(buffer: HtmlBuffer) {
         buffer.append("<title>")
         buffer.increaseIndent()
-        buffer.append(title)
+        buffer.append("Sensei - Code Review")
         buffer.decreaseIndent()
         buffer.append("</title>")
     }
