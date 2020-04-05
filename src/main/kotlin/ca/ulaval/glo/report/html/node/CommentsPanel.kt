@@ -24,14 +24,14 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
         buffer.append("<div class='file-comments'>")
         buffer.increaseIndent()
         review.comments.toSortedMap(GroupSourceAndTestFilesPathComparator()).forEach(fun(fileName, fileComments) {
-            buffer.append("<details class='comment'>")
+            buffer.append("<details key='$fileName' class='comment'>")
             buffer.increaseIndent()
             buffer.append("<summary class='comment-summary'>$fileName</summary>")
             buffer.append("<ul>")
             buffer.increaseIndent()
             fileComments.sortBy { it.startingLine }
-            fileComments.forEach(fun(fileComment) {
-                buffer.append("<li>")
+            fileComments.forEachIndexed(fun(index, fileComment) {
+                buffer.append("<li key='${fileComment.hashCode()}'>")
                 buffer.increaseIndent()
                 buffer.append("<div class='file-comment'>")
                 buffer.increaseIndent()

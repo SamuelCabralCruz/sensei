@@ -28,8 +28,10 @@ class CommentLineMarkerFactory {
             val tooltip = StringBuilder()
             tooltip.append("Code Review Comment")
             val reviewCommentDetails = reviewComment.details
+            tooltip.append("\n\nLabel:\n")
+            tooltip.append(reviewCommentDetails.label)
             val description = reviewCommentDetails.description
-            if (description.isNotEmpty()) {
+            if (description.isNotBlank()) {
                 tooltip.append("\n\nDescription:\n")
                 tooltip.append(prepend(wrap(description, 60), "\t"))
             }

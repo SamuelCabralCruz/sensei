@@ -1,6 +1,6 @@
 package ca.ulaval.glo.model
 
-class ReviewDetails() {
+class ReviewDetails() : ValueObject() {
     var reviewer: String? = null
     var teamNumber: Int? = null
     var evaluationName: String? = null

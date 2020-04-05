@@ -1,6 +1,6 @@
 package ca.ulaval.glo.model
 
-class ReviewCommentDetails() {
+class ReviewCommentDetails() : ValueObject() {
     var label = ""
     var description = ""
     var tags = mutableListOf<CommentTag>()
@@ -13,15 +13,5 @@ class ReviewCommentDetails() {
 
     fun clone(): ReviewCommentDetails {
         return ReviewCommentDetails(label, description, tags.toMutableList())
-    }
-
-    override fun toString(): String {
-        return label
-    }
-
-    override fun equals(other: Any?): Boolean {
-        other ?: return false
-        if (other !is ReviewCommentDetails) return false
-        return label == other.label && description == other.description && tags == other.tags
     }
 }

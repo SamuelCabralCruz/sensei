@@ -1,6 +1,6 @@
 package ca.ulaval.glo.model
 
-class ReviewComment() {
+class ReviewComment() : ValueObject() {
     var filePath = ""
     var startingLine = 0
     var highlight = IntRange(0, 0)

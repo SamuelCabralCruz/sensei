@@ -55,8 +55,9 @@ class Review {
     fun removeComment(commentToRemove: ReviewComment) {
         val filePath = commentToRemove.filePath
         val updatedComments = getFileReviewComments(filePath)
+        val commentToRemoveHashCode = commentToRemove.hashCode()
         updatedComments.removeIf(fun(comment: ReviewComment): Boolean {
-            return comment.hashCode() == commentToRemove.hashCode()
+            return comment.hashCode() == commentToRemoveHashCode
         })
         comments[filePath] = updatedComments
     }
