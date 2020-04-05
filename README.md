@@ -120,3 +120,7 @@
 In order to use JQuery, we have to [download](https://code.jquery.com/jquery/) a minified version.
 We are currently using the version [`jQuery Core 3.4.1`](https://code.jquery.com/jquery-3.4.1.min.js).
 There was a mention to include `integrity` and `crossorigin` attributes to the script tag, but we did not.
+
+## Favicon
+
+Favicon images have been generated using [Real Favicon Generator](https://realfavicongenerator.net/).

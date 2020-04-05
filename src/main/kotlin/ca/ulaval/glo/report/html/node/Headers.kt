@@ -12,6 +12,7 @@ class Headers() : HtmlNode() {
         appendTitle(buffer)
         appendCssFiles(buffer)
         appendJsFiles(buffer)
+        appendFaviconImages(buffer)
         appendMeta(buffer)
     }
 
@@ -40,6 +41,20 @@ class Headers() : HtmlNode() {
         jsResources.forEach(fun(jsResource) {
             buffer.append("<script src='$jsResource'></script>")
         })
+    }
+
+    private fun appendFaviconImages(buffer: HtmlBuffer) {
+        buffer.append("<link rel='apple-touch-icon' sizes='180x180' href='assets/img/favicon/apple-touch-icon.png'>")
+        buffer.append("<link rel='icon' type='image/png' sizes='32x32' href='assets/img/favicon/favicon-32x32.png'>")
+        buffer.append("<link rel='icon' type='image/png' sizes='16x16' href='assets/img/favicon/favicon-16x16.png'>")
+        buffer.append("<link rel='manifest' href='assets/img/favicon/site.webmanifest'>")
+        buffer.append("<link rel='mask-icon' href='assets/img/favicon/safari-pinned-tab.svg' color='#65828a'>")
+        buffer.append("<link rel='shortcut icon' href='assets/img/favicon/favicon.ico'>")
+        buffer.append("<meta name='apple-mobile-web-app-title' content='Sensei'>")
+        buffer.append("<meta name='application-name' content='Sensei'>")
+        buffer.append("<meta name='msapplication-TileColor' content='#da532c'>")
+        buffer.append("<meta name='msapplication-config' content='assets/img/favicon/browserconfig.xml'>")
+        buffer.append("<meta name='theme-color' content='#ffffff'>")
     }
 
     private fun appendMeta(buffer: HtmlBuffer) {
