@@ -13,6 +13,10 @@ class HtmlBuffer {
         buffer.append("${getIndentation()}$content\n")
     }
 
+    fun appendWithoutIndent(content: String) {
+        buffer.append("$content\n")
+    }
+
     private fun getIndentation(): String {
         return "\t".repeat(incrementationLevel)
     }

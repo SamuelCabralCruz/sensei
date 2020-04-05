@@ -1,7 +1,7 @@
 package ca.ulaval.glo.view.lineMarker
 
-import ca.ulaval.glo.persistence.ReviewPersistence
 import ca.ulaval.glo.model.ReviewComment
+import ca.ulaval.glo.persistence.ReviewPersistence
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
 import com.intellij.openapi.components.service
@@ -27,12 +27,13 @@ class RunnableLineMarkerProvider : LineMarkerProvider {
         val reviewCommentsForCurrentFile = reviewComments[currentFileRelativePath] ?: return
         val reviewCommentsForCurrentFileByLine = mutableMapOf<Int, MutableList<ReviewComment>>()
         reviewCommentsForCurrentFile.forEach(fun(reviewComment) {
-            val lineReviewComments = reviewCommentsForCurrentFileByLine[reviewComment.highlight.first] ?: mutableListOf()
+            val lineReviewComments =
+                reviewCommentsForCurrentFileByLine[reviewComment.highlight.first] ?: mutableListOf()
             lineReviewComments.add(reviewComment)
             reviewCommentsForCurrentFileByLine[reviewComment.highlight.first] = lineReviewComments
         })
         elements.forEach(fun(element) {
-            val elementLine = StringUtil.offsetToLineNumber(containingFileText, element.textRange.startOffset)
+            val elementLine = StringUtil.offsetToLineNumber(containingFileText, element.textRange.startOffset) + 1
             val lineReviewComments = reviewCommentsForCurrentFileByLine[elementLine]
             lineReviewComments?.forEach(fun(reviewComment) {
                 result.add(CommentLineMarkerFactory().create(element, reviewComment))

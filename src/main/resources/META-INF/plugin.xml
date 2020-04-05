@@ -21,11 +21,11 @@
                     text="Create Review">
             </action>
             <action class="ca.ulaval.glo.action.AddCommentAction" id="sensei.actions.addComment" text="Add Comment">
-                <keyboard-shortcut first-keystroke="control shift F4" keymap="$default" replace-all="true"/>
+                <keyboard-shortcut first-keystroke="control shift F5" keymap="$default" replace-all="true"/>
             </action>
             <action class="ca.ulaval.glo.action.GenerateReportAction" id="sensei.actions.generateReport"
                     text="Generate Report">
-                <keyboard-shortcut first-keystroke="control shift F5" keymap="$default" replace-all="true"/>
+                <keyboard-shortcut first-keystroke="control shift F6" keymap="$default" replace-all="true"/>
             </action>
             <action class="ca.ulaval.glo.action.CloseReviewAction" id="sensei.actions.closeReview"
                     text="Close Review">

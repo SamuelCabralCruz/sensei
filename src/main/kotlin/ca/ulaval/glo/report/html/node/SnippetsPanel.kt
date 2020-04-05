@@ -16,7 +16,7 @@ class SnippetsPanel(private val review: Review) : HtmlNode() {
         // TODO: determine dynamic brushes
         buffer.append("<pre class='line-numbers' data-start='${comment.startingLine}' data-line='${comment.highlight.first}-${comment.highlight.last}' style='white-space:pre-wrap;'><code class='language-java'>")
         buffer.increaseIndent()
-        buffer.append(StringEscapeUtils.escapeHtml4(comment.codeSnippet))
+        buffer.appendWithoutIndent(StringEscapeUtils.escapeHtml4(comment.codeSnippet))
         buffer.decreaseIndent()
         buffer.append("</code></pre>")
     }

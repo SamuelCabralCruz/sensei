@@ -33,8 +33,11 @@ class AddCommentAction : AnAction() {
         val containingFile = e.getData(LangDataKeys.PSI_FILE)?.originalFile ?: return
         val review = project.service<ReviewPersistence>().state ?: return
 
-        val chunkLineRange = IntRange(caret.selectionStartPosition.line, caret.selectionEndPosition.line)
+        val selectionStartingLine = editor.visualToLogicalPosition(caret.selectionStartPosition).line + 1
+        val selectionEndingLine = editor.visualToLogicalPosition(caret.selectionEndPosition).line + 1
+        val chunkLineRange = IntRange(selectionStartingLine, selectionEndingLine)
         val (startingLine, codeSnippet) = getCodeSnippet(chunkLineRange, editor)
+        if (codeSnippet.isEmpty()) return
         val editCommentDialog = EditCommentDialog()
         if (editCommentDialog.showAndGet()) {
             val reviewComment =
@@ -53,12 +56,39 @@ class AddCommentAction : AnAction() {
         chunkLineRange: IntRange,
         editor: Editor
     ): Pair<Int, String> {
-        val selectionStartLine = max(chunkLineRange.first - 10, 0)
-        val selectionEndLine = min(chunkLineRange.last + 10, editor.document.lineCount - 1)
-        val startOffset = editor.document.getLineStartOffset(selectionStartLine)
-        val endOffset = editor.document.getLineEndOffset(selectionEndLine)
+        val selectionStartLine = max(chunkLineRange.first - 10, 1)
+        val selectionEndLine = min(chunkLineRange.last + 10, editor.document.lineCount)
+        val startOffset = editor.document.getLineStartOffset(selectionStartLine - 1)
+        val endOffset = editor.document.getLineEndOffset(selectionEndLine - 1)
         val textRange = TextRange.from(startOffset, endOffset - startOffset)
-        return Pair(selectionStartLine, editor.document.getText(textRange))
+        return normalizeWhiteSpaces(selectionStartLine, editor.document.getText(textRange))
+    }
+
+    private fun normalizeWhiteSpaces(startingLine: Int, codeSnippet: String): Pair<Int, String> {
+        val (_startingLine, _codeSnippet) = removeHeadingEmptyLines(codeSnippet, startingLine)
+        return removeIndent(_startingLine, _codeSnippet)
+    }
+
+    private fun removeHeadingEmptyLines(
+        codeSnippet: String,
+        startingLine: Int
+    ): Pair<Int, String> {
+        val lines = codeSnippet.split("\n")
+        val firstNotEmptyLineIndex = lines.indexOfFirst(fun(line) = line.isNotEmpty())
+        val normalizedLines = lines.slice(IntRange(firstNotEmptyLineIndex, lines.lastIndex))
+        return Pair(startingLine + firstNotEmptyLineIndex, normalizedLines.joinToString("\n"))
+    }
+
+    private fun removeIndent(startingLine: Int, codeSnippet: String): Pair<Int, String> {
+        val lines = codeSnippet.split("\n")
+        var commonPrefix = lines[0]
+        lines.slice(IntRange(1, lines.lastIndex)).forEach(fun(line) {
+            if (line.isNotEmpty()) commonPrefix = commonPrefix.commonPrefixWith(line)
+        })
+        return Pair(
+            startingLine,
+            lines.joinToString("\n", transform = fun(line): String { return line.removePrefix(commonPrefix) })
+        )
     }
 
     private fun persistReviewComment(
