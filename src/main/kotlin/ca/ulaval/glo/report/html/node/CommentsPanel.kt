@@ -56,9 +56,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
         index: Int,
         fileComment: ReviewComment
     ) {
-        buffer.append("<li key='${fileComment.hashCode()}-$index'>")
-        buffer.increaseIndent()
-        buffer.append("<div class='file-comment'>")
+        buffer.append("<li key='${fileComment.hashCode()}-$index' class='file-comment'>")
         buffer.increaseIndent()
         buffer.append("<p>Line ${fileComment.startingLine} - ${fileComment.details.label}</p>")
         fileComment.details.tags.forEach(fun(tag) {
@@ -66,8 +64,6 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
             buffer.append("<span class='badge $tagClassName'>${tag.value}</span>")
         })
         buffer.append("<p>${fileComment.details.description}</p>")
-        buffer.decreaseIndent()
-        buffer.append("</div>")
         buffer.decreaseIndent()
         buffer.append("</li>")
     }
