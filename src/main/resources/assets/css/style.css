@@ -27,12 +27,23 @@ body {
 }
 
 .comments-panel {
-    background: red;
-    padding: 2em;
+    padding: 1em 2em;
 }
 
 .file-comments-summary {
     word-wrap: break-word;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    font-size: medium;
+    font-weight: bold;
+}
+
+.file-comments-summary::marker {
+    font-size: larger;
 }
 
 .file-comments-details {
@@ -54,11 +65,16 @@ body {
     width: 100%;
     height: 100%;
     position: absolute;
+    border-radius: 0.5em;
+    border: 2px solid transparent;
+    background-color: hsla(201, 100%, 50%, .1);
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
 }
 
 .file-comment:hover:after {
-    border-radius: 0.5em;
-    border: 4px solid #bbbbbb;
+    opacity: 1;
+    transition: opacity 0.1s ease-in-out;
 }
 
 .file-comment-logo {
@@ -75,7 +91,6 @@ body {
 }
 
 .snippets-panel {
-    background: green;
 }
 
 .snippet {
