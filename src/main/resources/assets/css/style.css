@@ -46,3 +46,13 @@ body {
 .snippet {
     display: none;
 }
+
+@media only screen and (max-width: 1024px) {
+    .snippets-panel {
+        display: none;
+    }
+
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}

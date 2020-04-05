@@ -2,8 +2,13 @@
 
 ## List of features
 
-- Available for all [Jetbrains IDEs](https://www.jetbrains.com/products.html#type=ide)
-- Support 
+- Available for all [Jetbrains IDEs](https://www.jetbrains.com/products.html#type=ide).
+- Support all languages.
+
+## Limitations
+
+- Report highlighting might not work if language fall of this list.
+- Line markers in the IDE might be misplaced depending on the granularity of the PSI elements. 
 
 ## Code Highlighting
 
