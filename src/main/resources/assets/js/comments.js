@@ -32,7 +32,7 @@ function fileCommentHoverOut() {
 }
 
 $(document).ready(function () {
-    $('li.file-comment').each(function () {
+    $('div.file-comment').each(function () {
         $(this).hover(fileCommentHoverIn(), fileCommentHoverOut());
     })
 });

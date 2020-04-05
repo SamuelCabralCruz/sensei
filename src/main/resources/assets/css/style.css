@@ -35,8 +35,43 @@ body {
     word-wrap: break-word;
 }
 
-.file-comment:hover {
-    background-color: #2b91d6;
+.file-comments-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-left: 1em;
+}
+
+.file-comment {
+    display: grid;
+    grid-template-columns: 2em 1fr;
+    position: relative;
+    padding: 0.5em;
+    margin: 0.5em 0;
+}
+
+.file-comment:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.file-comment:hover:after {
+    border-radius: 0.5em;
+    border: 4px solid #bbbbbb;
+}
+
+.file-comment-logo {
+    width: 100%;
+}
+
+.file-comment-content {
+    display: grid;
+    grid-template-rows: 2em 1fr;
+}
+
+.file-comment-content-header {
+    align-self: center;
 }
 
 .snippets-panel {
