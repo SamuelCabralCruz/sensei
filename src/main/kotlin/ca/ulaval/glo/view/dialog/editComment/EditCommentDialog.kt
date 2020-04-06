@@ -81,12 +81,14 @@ class EditCommentDialog() : DialogWrapper(true) {
     }
 
     private fun createDescriptionField(): JBScrollPane {
-        descriptionField.preferredSize = Dimension(550, 300)
         descriptionField.lineWrap = true
         descriptionField.addKeyListener(SimpleKeyListener(fun(_) {
             selectedPreset = null
         }))
-        return JBScrollPane(descriptionField, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_NEVER)
+        val scrollPane = JBScrollPane(descriptionField, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_NEVER)
+        scrollPane.preferredSize = Dimension(550, 300)
+        scrollPane.minimumSize = Dimension(550, 300)
+        return scrollPane
     }
 
     private fun fillFormWithReviewCommentDetails(reviewCommentDetails: ReviewCommentDetails) {
