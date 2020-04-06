@@ -50,21 +50,21 @@ class EditReviewDialog() : DialogWrapper(true) {
     }
 
     private fun checkMissingReviewer() {
-        if (reviewerField.text == "") {
+        if (reviewerField.text.isBlank()) {
             missingField("Reviewer")
             throw ValidationError()
         }
     }
 
     private fun checkMissingTeamNumber() {
-        if (teamNumberField.text == "") {
+        if (teamNumberField.text.isBlank()) {
             missingField("Team Number")
             throw ValidationError()
         }
     }
 
     private fun checkMissingEvaluationName() {
-        if (evaluationNameField.text == "") {
+        if (evaluationNameField.text.isBlank()) {
             missingField("Evaluation Name")
             throw ValidationError()
         }

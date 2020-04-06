@@ -7,6 +7,8 @@ import ca.ulaval.glo.model.getAllPresetReviewCommentDetails
 import ca.ulaval.glo.view.dialog.Label
 import ca.ulaval.glo.view.dialog.Panel
 import ca.ulaval.glo.view.dialog.SimpleKeyListener
+import ca.ulaval.glo.view.dialog.validation.ValidationError
+import ca.ulaval.glo.view.dialog.validation.missingField
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.components.JBCheckBox
@@ -105,6 +107,26 @@ class EditCommentDialog() : DialogWrapper(true) {
         tagFields.values.forEach(fun(checkbox) {
             checkbox.isSelected = false
         })
+    }
+
+    override fun doOKAction() {
+        try {
+            validateInputs()
+        } catch (e: ValidationError) {
+            return
+        }
+        close(0)
+    }
+
+    private fun validateInputs() {
+        checkMissingLabel()
+    }
+
+    private fun checkMissingLabel() {
+        if (presets.editor.item.toString().isBlank()) {
+            missingField("Label")
+            throw ValidationError()
+        }
     }
 
     fun getDetails(): ReviewCommentDetails {
