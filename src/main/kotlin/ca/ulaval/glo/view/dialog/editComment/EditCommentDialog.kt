@@ -47,7 +47,7 @@ class EditCommentDialog() : DialogWrapper(true) {
         panel.add(Label("Tags"), gb.nextLine().next())
         CommentTag.values().forEach(fun(tag) {
             val checkbox = JBCheckBox(tag.value)
-            checkbox.addActionListener(ActionListener(fun(event) {
+            checkbox.addActionListener(ActionListener(fun(_) {
                 selectedPreset = null
             }))
             tagFields[tag] = checkbox

@@ -5,6 +5,9 @@ import ca.ulaval.glo.model.Review
 import ca.ulaval.glo.model.ReviewComment
 import ca.ulaval.glo.report.file.comparator.GroupSourceAndTestFilesPathComparator
 import ca.ulaval.glo.report.html.HtmlBuffer
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME
 
 class CommentsPanel(private val review: Review) : HtmlNode() {
     override fun openTag(buffer: HtmlBuffer) {
@@ -12,6 +15,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
         buffer.increaseIndent()
         appendCommentsPanelHeader(buffer)
         appendFilesComments(buffer)
+        appendCopyright(buffer)
     }
 
     private fun appendCommentsPanelHeader(buffer: HtmlBuffer) {
@@ -136,6 +140,15 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
             val tagClassName = tag.value.toLowerCase().split(" ").joinToString("-")
             buffer.append("<span class='badge $tagClassName'>${tag.value}</span>")
         })
+        buffer.decreaseIndent()
+        buffer.append("</div>")
+    }
+
+    private fun appendCopyright(buffer: HtmlBuffer) {
+        buffer.append("<div class='copyright'>")
+        buffer.increaseIndent()
+        val timestamp = RFC_1123_DATE_TIME.withZone(ZoneOffset.UTC).format(Instant.now())
+        buffer.append("Generated with <b>&copy;SenseiCodeReviews</b> on $timestamp")
         buffer.decreaseIndent()
         buffer.append("</div>")
     }

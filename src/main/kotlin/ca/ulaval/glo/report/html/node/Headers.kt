@@ -19,7 +19,7 @@ class Headers() : HtmlNode() {
     private fun appendTitle(buffer: HtmlBuffer) {
         buffer.append("<title>")
         buffer.increaseIndent()
-        buffer.append("Sensei - Code Review")
+        buffer.append("Sensei - Code Reviews")
         buffer.decreaseIndent()
         buffer.append("</title>")
     }
