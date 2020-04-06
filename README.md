@@ -114,6 +114,32 @@
             margin-bottom: 1em;
         }
         ```
+    - Modify code background color
+        ```css
+        pre[class*="language-"] > code {
+            ... 
+            background-color: #ededed;
+            ...
+        }
+       ```
+    - Remove tokens background color
+        ```css
+        .token.operator,
+        .token.entity,
+        .token.url,
+        .token.variable {
+            ...
+            background: rgba(255, 255, 255, 0.5);
+            ...
+        }
+        
+        .language-css .token.string,
+        .style .token.string {
+            ...
+            background: rgba(255, 255, 255, 0.5);
+            ...
+        }
+        ```
 
 ## JQuery
 

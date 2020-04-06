@@ -91,6 +91,39 @@ body {
 }
 
 .snippets-panel {
+    background-color: #ededed;
+}
+
+.snippets-panel-empty-state-layout {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F92C64;
+}
+
+.snippets-panel-empty-state {
+    flex: 1;
+    padding: 25%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: 1em;
+}
+
+.snippets-panel-empty-state-image {
+    width: 100%;
+}
+
+.snippets-panel-empty-state-quote,
+.snippets-panel-empty-state-quote-author {
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+}
+
+.snippets-panel-empty-state-quote-author {
+    font-style: italic;
 }
 
 .snippet {

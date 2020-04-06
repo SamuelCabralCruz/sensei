@@ -39,7 +39,7 @@ pre[class*="language-"] {
 
 pre[class*="language-"] > code {
     position: relative;
-    background-color: #fdfdfd;
+    background-color: #ededed;
 }
 
 code[class*="language"] {
@@ -109,7 +109,6 @@ pre[class*="language-"]:after {
 .token.url,
 .token.variable {
     color: #a67f59;
-    background: rgba(255, 255, 255, 0.5);
 }
 
 .token.atrule,
@@ -127,7 +126,6 @@ pre[class*="language-"]:after {
 .language-css .token.string,
 .style .token.string {
     color: #a67f59;
-    background: rgba(255, 255, 255, 0.5);
 }
 
 .token.important {

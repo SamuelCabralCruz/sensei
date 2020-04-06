@@ -1,3 +1,4 @@
+let emptyState = null;
 let displayedSnippet = null;
 
 function triggerWindowResize() {
@@ -11,12 +12,30 @@ function triggerWindowResize() {
 }
 
 function showCodeSnippet(key) {
+    emptyState.hide();
     const correspondingCodeSnippet = $('div.snippets').find(`[key=${key}]`);
     if (displayedSnippet !== correspondingCodeSnippet) {
         if (displayedSnippet != null) displayedSnippet.hide();
         correspondingCodeSnippet.show();
         triggerWindowResize();
         displayedSnippet = correspondingCodeSnippet;
+    }
+}
+
+function hideCodeSnippet() {
+    emptyState.show();
+    if (displayedSnippet != null) displayedSnippet.hide();
+    displayedSnippet = null;
+}
+
+function commentsPanelHeaderHoverIn() {
+    return function () {
+        hideCodeSnippet()
+    }
+}
+
+function commentsPanelHeaderHoverOut() {
+    return function () {
     }
 }
 
@@ -32,6 +51,8 @@ function fileCommentHoverOut() {
 }
 
 $(document).ready(function () {
+    emptyState = $('div.snippets-panel-empty-state-layout');
+    $('div.comments-panel-header').hover(commentsPanelHeaderHoverIn(), commentsPanelHeaderHoverOut());
     $('div.file-comment').each(function () {
         $(this).hover(fileCommentHoverIn(), fileCommentHoverOut());
     })

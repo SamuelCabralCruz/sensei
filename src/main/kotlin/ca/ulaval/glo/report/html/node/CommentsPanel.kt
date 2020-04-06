@@ -10,12 +10,20 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
     override fun openTag(buffer: HtmlBuffer) {
         buffer.append("<div class='comments-panel'>")
         buffer.increaseIndent()
-        appendTitle(buffer)
+        appendCommentsPanelHeader(buffer)
         appendFilesComments(buffer)
     }
 
-    private fun appendTitle(buffer: HtmlBuffer) {
-        buffer.append("<h1>")
+    private fun appendCommentsPanelHeader(buffer: HtmlBuffer) {
+        buffer.append("<div class='comments-panel-header'>")
+        buffer.increaseIndent()
+        appendCommentsPanelTitle(buffer)
+        buffer.decreaseIndent()
+        buffer.append("</div>")
+    }
+
+    private fun appendCommentsPanelTitle(buffer: HtmlBuffer) {
+        buffer.append("<h1 class='comments-panel-title'>")
         buffer.increaseIndent()
         buffer.append(review.details.evaluationName!!)
         buffer.decreaseIndent()

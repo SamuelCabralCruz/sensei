@@ -9,7 +9,42 @@ class SnippetsPanel(private val review: Review) : HtmlNode() {
     override fun openTag(buffer: HtmlBuffer) {
         buffer.append("<div class='snippets-panel'>")
         buffer.increaseIndent()
+        appendEmptyState(buffer)
         appendSnippets(buffer)
+    }
+
+    private fun appendEmptyState(buffer: HtmlBuffer) {
+        buffer.append("<div class='snippets-panel-empty-state-layout'>")
+        buffer.increaseIndent()
+        buffer.append("<div class='snippets-panel-empty-state'>")
+        buffer.increaseIndent()
+        appendEmptyStateImage(buffer)
+        appendEmptyStateQuote(buffer)
+        appendEmptyStateQuoteAuthor(buffer)
+        buffer.decreaseIndent()
+        buffer.append("</div>")
+        buffer.decreaseIndent()
+        buffer.append("</div>")
+    }
+
+    private fun appendEmptyStateImage(buffer: HtmlBuffer) {
+        buffer.append("<img class='snippets-panel-empty-state-image' src='assets/img/sensei.svg' type='image/svg+xml'/>")
+    }
+
+    private fun appendEmptyStateQuote(buffer: HtmlBuffer) {
+        buffer.append("<div class='snippets-panel-empty-state-quote'>")
+        buffer.increaseIndent()
+        buffer.append("Be respectful of your Sensei.")
+        buffer.decreaseIndent()
+        buffer.append("</div>")
+    }
+
+    private fun appendEmptyStateQuoteAuthor(buffer: HtmlBuffer) {
+        buffer.append("<div class='snippets-panel-empty-state-quote-author'>")
+        buffer.increaseIndent()
+        buffer.append("- Fumio Demura -")
+        buffer.decreaseIndent()
+        buffer.append("</div>")
     }
 
     private fun appendSnippets(buffer: HtmlBuffer) {
