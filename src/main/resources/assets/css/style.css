@@ -30,6 +30,31 @@ body {
     padding: 1em 2em;
 }
 
+.comments-panel-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 1em 0;
+}
+
+.comments-panel-header-title {
+    font-weight: bold;
+    font-size: 4vh;
+    align-self: center;
+}
+
+.comments-panel-header-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: 0;
+}
+
+.comments-panel-header-details > * {
+    font-size: medium;
+    font-weight: bold;
+    text-align: end;
+    align-self: center;
+}
+
 .file-comments-summary {
     word-wrap: break-word;
     cursor: pointer;

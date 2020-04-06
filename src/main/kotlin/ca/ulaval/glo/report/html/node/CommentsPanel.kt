@@ -17,17 +17,28 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
     private fun appendCommentsPanelHeader(buffer: HtmlBuffer) {
         buffer.append("<div class='comments-panel-header'>")
         buffer.increaseIndent()
-        appendCommentsPanelTitle(buffer)
+        appendCommentsPanelHeaderTitle(buffer)
+        appendCommentsPanelHeaderDetails(buffer)
         buffer.decreaseIndent()
         buffer.append("</div>")
     }
 
-    private fun appendCommentsPanelTitle(buffer: HtmlBuffer) {
-        buffer.append("<h1 class='comments-panel-title'>")
+    private fun appendCommentsPanelHeaderTitle(buffer: HtmlBuffer) {
+        buffer.append("<div class='comments-panel-header-title'>")
         buffer.increaseIndent()
-        buffer.append(review.details.evaluationName!!)
+        buffer.append(review.details.evaluationName!!.capitalize())
         buffer.decreaseIndent()
-        buffer.append("</h1>")
+        buffer.append("</div>")
+    }
+
+    private fun appendCommentsPanelHeaderDetails(buffer: HtmlBuffer) {
+        buffer.append("<div class='comments-panel-header-details'>")
+        buffer.increaseIndent()
+        buffer.append("<div class='comments-panel-header-details-reviewer'>${review.details.reviewer!!}</div>")
+        val formattedTeamNumber = review.details.teamNumber!!.toString().padStart(2, '0')
+        buffer.append("<div class='comments-panel-header-details-team-number'>Team #$formattedTeamNumber</div>")
+        buffer.decreaseIndent()
+        buffer.append("</div>")
     }
 
     private fun appendFilesComments(buffer: HtmlBuffer) {
