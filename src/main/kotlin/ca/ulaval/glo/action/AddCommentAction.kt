@@ -47,7 +47,8 @@ class AddCommentAction : AnAction() {
                 ReviewComment(
                     getRelativeFilePath(project, virtualFile),
                     startingLine,
-                    chunkLineRange,
+                    selectionStartingLine,
+                    selectionEndingLine,
                     codeSnippet,
                     editCommentDialog.getDetails()
                 )

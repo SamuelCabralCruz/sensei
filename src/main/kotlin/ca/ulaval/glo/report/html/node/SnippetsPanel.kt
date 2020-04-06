@@ -78,7 +78,7 @@ class SnippetsPanel(private val review: Review) : HtmlNode() {
     private fun getOtherAttributes(comment: ReviewComment): String {
         val otherAttributes = mutableListOf<String>()
         otherAttributes.add("data-start='${comment.startingLine}'")
-        otherAttributes.add("data-line='${comment.highlight.first}-${comment.highlight.last}'")
+        otherAttributes.add("data-line='${comment.highlightStartingLine}-${comment.highlightEndingLine}'")
         otherAttributes.add("style='white-space:pre-wrap;'")
         return otherAttributes.joinToString(" ")
     }

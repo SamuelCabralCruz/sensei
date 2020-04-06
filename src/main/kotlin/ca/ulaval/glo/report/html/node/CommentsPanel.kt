@@ -110,7 +110,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
     ) {
         buffer.append("<div class='file-comment-content-header'>")
         buffer.increaseIndent()
-        buffer.append("Line ${fileComment.highlight.start} - ${fileComment.details.label}")
+        buffer.append("Line ${fileComment.highlightStartingLine} - ${fileComment.details.label}")
         buffer.decreaseIndent()
         buffer.append("</div>")
     }
@@ -148,7 +148,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
         buffer.append("<div class='copyright'>")
         buffer.increaseIndent()
         val timestamp = RFC_1123_DATE_TIME.withZone(ZoneOffset.UTC).format(Instant.now())
-        buffer.append("Generated with <b>&copy;SenseiCodeReviews</b> on $timestamp")
+        buffer.append("Generated with <b>&nbsp;&copy;SenseiCodeReviews&nbsp;</b> on $timestamp")
         buffer.decreaseIndent()
         buffer.append("</div>")
     }

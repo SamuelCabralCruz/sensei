@@ -28,7 +28,8 @@ body {
 
 .comments-panel {
     padding: 1em 2em;
-    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .comments-panel-header {
@@ -157,12 +158,13 @@ body {
 }
 
 .copyright {
-    position: absolute;
-    left: 0;
-    bottom: 0;
     width: 100%;
-    text-align: center;
     font-size: 1.5vh;
+    padding-top: 4em;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
 
 @media only screen and (max-width: 1024px) {

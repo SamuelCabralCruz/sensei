@@ -28,32 +28,16 @@ function hideCodeSnippet() {
     displayedSnippet = null;
 }
 
-function commentsPanelHeaderHoverIn() {
-    return function () {
-        hideCodeSnippet()
-    }
-}
-
-function commentsPanelHeaderHoverOut() {
-    return function () {
-    }
-}
-
-function fileCommentHoverIn() {
-    return function () {
-        showCodeSnippet($(this).attr('key'));
-    };
-}
-
-function fileCommentHoverOut() {
-    return function () {
-    };
+function noop() {
 }
 
 $(document).ready(function () {
     emptyState = $('div.snippets-panel-empty-state-layout');
-    $('div.comments-panel-header').hover(commentsPanelHeaderHoverIn(), commentsPanelHeaderHoverOut());
+    $('div.comments-panel-header').hover(hideCodeSnippet, noop);
+    $('div.copyright').hover(hideCodeSnippet, noop);
     $('div.file-comment').each(function () {
-        $(this).hover(fileCommentHoverIn(), fileCommentHoverOut());
-    })
+        $(this).hover(function () {
+            showCodeSnippet($(this).attr('key'))
+        }, noop)
+    });
 });

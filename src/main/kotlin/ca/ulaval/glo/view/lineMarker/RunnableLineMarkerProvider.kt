@@ -17,6 +17,7 @@ class RunnableLineMarkerProvider : LineMarkerProvider {
         elements: MutableList<PsiElement>,
         result: MutableCollection<LineMarkerInfo<PsiElement>>
     ) {
+        if(elements.isEmpty()) return
         val project = elements[0].project
         val reviewComments = project.service<ReviewPersistence>().state?.comments ?: return
         val projectBasePath = project.basePath ?: return
@@ -28,9 +29,9 @@ class RunnableLineMarkerProvider : LineMarkerProvider {
         val reviewCommentsForCurrentFileByLine = mutableMapOf<Int, MutableList<ReviewComment>>()
         reviewCommentsForCurrentFile.forEach(fun(reviewComment) {
             val lineReviewComments =
-                reviewCommentsForCurrentFileByLine[reviewComment.highlight.first] ?: mutableListOf()
+                reviewCommentsForCurrentFileByLine[reviewComment.highlightStartingLine] ?: mutableListOf()
             lineReviewComments.add(reviewComment)
-            reviewCommentsForCurrentFileByLine[reviewComment.highlight.first] = lineReviewComments
+            reviewCommentsForCurrentFileByLine[reviewComment.highlightStartingLine] = lineReviewComments
         })
         elements.forEach(fun(element) {
             val elementLine = StringUtil.offsetToLineNumber(containingFileText, element.textRange.startOffset) + 1
