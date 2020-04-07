@@ -32,7 +32,7 @@ class RemoveFileCommentAction(private val fileComment: ReviewFileComment) :
                 Messages.getWarningIcon()
             ) == Messages.OK
         ) {
-            review.removeComment(fileComment)
+            review.removeFileComment(fileComment)
             DaemonCodeAnalyzer.getInstance(project).restart(containingFile)
         }
     }

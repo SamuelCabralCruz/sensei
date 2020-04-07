@@ -48,16 +48,29 @@ class Review {
         filesComments = mutableMapOf()
     }
 
-    fun addComment(fileCommentToAdd: ReviewFileComment) {
+    fun addGeneralComment(generalCommentToAdd: ReviewGeneralComment) {
+        generalComments.add(generalCommentToAdd)
+    }
+
+    fun removeGeneralComment(generalCommentToRemove: ReviewGeneralComment) {
+        generalComments.remove(generalCommentToRemove)
+    }
+
+    fun replaceGeneralComment(oldGeneralComment: ReviewGeneralComment, newGeneralComment: ReviewGeneralComment) {
+        removeGeneralComment(oldGeneralComment)
+        addGeneralComment(newGeneralComment)
+    }
+
+    fun addFileComment(fileCommentToAdd: ReviewFileComment) {
         val filePath = fileCommentToAdd.filePath
-        val updatedComments = getFileReviewComments(filePath)
+        val updatedComments = getFileComments(filePath)
         updatedComments.add(fileCommentToAdd)
         filesComments[filePath] = updatedComments
     }
 
-    fun removeComment(fileCommentToRemove: ReviewFileComment) {
+    fun removeFileComment(fileCommentToRemove: ReviewFileComment) {
         val filePath = fileCommentToRemove.filePath
-        val updatedComments = getFileReviewComments(filePath)
+        val updatedComments = getFileComments(filePath)
         val commentToRemoveHashCode = fileCommentToRemove.hashCode()
         updatedComments.removeIf(fun(fileComment: ReviewFileComment): Boolean {
             return fileComment.hashCode() == commentToRemoveHashCode
@@ -65,12 +78,12 @@ class Review {
         filesComments[filePath] = updatedComments
     }
 
-    fun replaceComment(oldFileComment: ReviewFileComment, newFileComment: ReviewFileComment) {
-        removeComment(oldFileComment)
-        addComment(newFileComment)
+    fun replaceFileComment(oldFileComment: ReviewFileComment, newFileComment: ReviewFileComment) {
+        removeFileComment(oldFileComment)
+        addFileComment(newFileComment)
     }
 
-    private fun getFileReviewComments(filePath: String): MutableList<ReviewFileComment> {
+    private fun getFileComments(filePath: String): MutableList<ReviewFileComment> {
         return filesComments.getOrDefault(filePath, mutableListOf())
     }
 

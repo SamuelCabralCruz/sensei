@@ -21,7 +21,7 @@ import javax.swing.JComponent
 import javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
 import javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED
 
-class EditCommentDialog() : DialogWrapper(true) {
+class EditCommentDialog(_title: String) : DialogWrapper(true) {
     // TODO: find a way to set focus on description field on open
     // TODO: add shortcuts for checkboxes + on key press focus text area
     // TODO: make dropdown searchable
@@ -30,13 +30,13 @@ class EditCommentDialog() : DialogWrapper(true) {
     private val descriptionField = JBTextArea()
     private var tagFields = mutableMapOf<CommentTag, JBCheckBox>()
 
-    constructor(comment: ReviewComment) : this() {
-        fillFormWithReviewCommentDetails(comment.details)
-    }
-
     init {
         init()
-        title = "Edit Comment"
+        title = _title
+    }
+
+    constructor(title: String, comment: ReviewComment) : this(title) {
+        fillFormWithReviewCommentDetails(comment.details)
     }
 
     override fun createCenterPanel(): JComponent? {

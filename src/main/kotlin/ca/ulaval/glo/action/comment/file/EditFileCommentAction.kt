@@ -1,7 +1,7 @@
 package ca.ulaval.glo.action.comment.file
 
-import ca.ulaval.glo.persistence.ReviewPersistence
 import ca.ulaval.glo.model.review.comment.ReviewFileComment
+import ca.ulaval.glo.persistence.ReviewPersistence
 import ca.ulaval.glo.view.dialog.comment.EditCommentDialog
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.icons.AllIcons
@@ -10,7 +10,8 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.components.service
 
-class EditFileCommentAction(private val fileComment: ReviewFileComment) : AnAction("Edit comment", "", AllIcons.Actions.Edit) {
+class EditFileCommentAction(private val fileComment: ReviewFileComment) :
+    AnAction("Edit comment", "", AllIcons.Actions.Edit) {
     override fun update(e: AnActionEvent) {
         val project = e.project ?: return
         val review = project.service<ReviewPersistence>().state ?: return
@@ -24,10 +25,10 @@ class EditFileCommentAction(private val fileComment: ReviewFileComment) : AnActi
         val containingFile = e.getData(LangDataKeys.PSI_FILE)?.originalFile ?: return
         val updatedComment = fileComment.clone()
         val editCommentDialog =
-            EditCommentDialog(updatedComment)
+            EditCommentDialog("Edit File Comment", updatedComment)
         if (editCommentDialog.showAndGet()) {
             updatedComment.details = editCommentDialog.getDetails()
-            review.replaceComment(fileComment, updatedComment)
+            review.replaceFileComment(fileComment, updatedComment)
             DaemonCodeAnalyzer.getInstance(project).restart(containingFile)
         }
     }

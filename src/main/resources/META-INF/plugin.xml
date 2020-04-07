@@ -17,24 +17,35 @@
     <actions>
         <group id="sensei.actions" text="Sensei">
             <add-to-group group-id="MainMenu" anchor="last"/>
-            <action class="ca.ulaval.glo.action.review.CreateReviewAction" id="sensei.actions.createReview"
+            <action class="ca.ulaval.glo.action.review.CreateReviewAction"
+                    id="sensei.actions.createReview"
                     text="Create Review">
             </action>
-            <action class="ca.ulaval.glo.action.comment.file.AddFileCommentAction" id="sensei.actions.addComment"
+            <action class="ca.ulaval.glo.action.comment.general.AddGeneralCommentAction"
+                    id="sensei.actions.addGeneralComment"
+                    text="Add General Comment">
+                <keyboard-shortcut first-keystroke="altGraph F4" keymap="$default" replace-all="true"/>
+            </action>
+            <action class="ca.ulaval.glo.action.comment.file.AddFileCommentAction"
+                    id="sensei.actions.addFileComment"
                     text="Add File Comment">
-                <keyboard-shortcut first-keystroke="control shift F5" keymap="$default" replace-all="true"/>
+                <keyboard-shortcut first-keystroke="altGraph F5" keymap="$default" replace-all="true"/>
             </action>
-            <action class="ca.ulaval.glo.action.report.GenerateReportAction" id="sensei.actions.generateReport"
+            <action class="ca.ulaval.glo.action.report.GenerateReportAction"
+                    id="sensei.actions.generateReport"
                     text="Generate Report">
-                <keyboard-shortcut first-keystroke="control shift F6" keymap="$default" replace-all="true"/>
+                <keyboard-shortcut first-keystroke="altGraph F6" keymap="$default" replace-all="true"/>
             </action>
-            <action class="ca.ulaval.glo.action.review.CloseReviewAction" id="sensei.actions.closeReview"
+            <action class="ca.ulaval.glo.action.review.CloseReviewAction"
+                    id="sensei.actions.closeReview"
                     text="Close Review">
             </action>
-            <action class="ca.ulaval.glo.action.review.ReopenReviewAction" id="sensei.actions.reopenReview"
+            <action class="ca.ulaval.glo.action.review.ReopenReviewAction"
+                    id="sensei.actions.reopenReview"
                     text="Reopen Review">
             </action>
-            <action class="ca.ulaval.glo.action.review.DeleteReviewAction" id="sensei.actions.deleteReview"
+            <action class="ca.ulaval.glo.action.review.DeleteReviewAction"
+                    id="sensei.actions.deleteReview"
                     text="Delete Review">
             </action>
         </group>

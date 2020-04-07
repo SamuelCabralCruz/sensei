@@ -41,9 +41,9 @@ class AddFileCommentAction : AnAction() {
         val chunkLineRange = IntRange(selectionStartingLine, selectionEndingLine)
         val (startingLine, codeSnippet) = getCodeSnippet(chunkLineRange, document)
         if (codeSnippet.isBlank()) return
-        val editCommentDialog = EditCommentDialog()
+        val editCommentDialog = EditCommentDialog("Add File Comment")
         if (editCommentDialog.showAndGet()) {
-            val reviewComment =
+            val fileComment =
                 ReviewFileComment(
                     getRelativeFilePath(project, virtualFile),
                     startingLine,
@@ -52,7 +52,7 @@ class AddFileCommentAction : AnAction() {
                     codeSnippet,
                     editCommentDialog.getDetails()
                 )
-            persistFileComment(review, reviewComment, project, containingFile)
+            persistFileComment(review, fileComment, project, containingFile)
         }
     }
 
@@ -110,7 +110,7 @@ class AddFileCommentAction : AnAction() {
         project: Project,
         containingFile: PsiFile
     ) {
-        review.addComment(fileComment)
+        review.addFileComment(fileComment)
         DaemonCodeAnalyzer.getInstance(project).restart(containingFile)
     }
 }
