@@ -1,16 +1,17 @@
-package ca.ulaval.glo.action
+package ca.ulaval.glo.action.comment.file
 
+import ca.ulaval.glo.model.review.comment.ReviewFileComment
 import ca.ulaval.glo.persistence.ReviewPersistence
-import ca.ulaval.glo.model.ReviewComment
-import ca.ulaval.glo.view.dialog.editComment.EditCommentDialog
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.components.service
+import com.intellij.openapi.ui.Messages
 
-class EditCommentAction(private val comment: ReviewComment) : AnAction("Edit comment", "", AllIcons.Actions.Edit) {
+class RemoveFileCommentAction(private val fileComment: ReviewFileComment) :
+    AnAction("Remove comment", "", AllIcons.General.Remove) {
     override fun update(e: AnActionEvent) {
         val project = e.project ?: return
         val review = project.service<ReviewPersistence>().state ?: return
@@ -22,12 +23,16 @@ class EditCommentAction(private val comment: ReviewComment) : AnAction("Edit com
         val project = e.project ?: return
         val review = project.service<ReviewPersistence>().state ?: return
         val containingFile = e.getData(LangDataKeys.PSI_FILE)?.originalFile ?: return
-        val updatedComment = comment.clone()
-        val editCommentDialog =
-            EditCommentDialog(updatedComment)
-        if (editCommentDialog.showAndGet()) {
-            updatedComment.details = editCommentDialog.getDetails()
-            review.replaceComment(comment, updatedComment)
+        if (Messages.showOkCancelDialog(
+                project,
+                "Are you sure you want to delete this comment?",
+                "Remove Comment",
+                "Ok",
+                "Cancel",
+                Messages.getWarningIcon()
+            ) == Messages.OK
+        ) {
+            review.removeComment(fileComment)
             DaemonCodeAnalyzer.getInstance(project).restart(containingFile)
         }
     }

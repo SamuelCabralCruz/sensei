@@ -1,10 +1,10 @@
-package ca.ulaval.glo.action
+package ca.ulaval.glo.action.comment.file
 
-import ca.ulaval.glo.model.Review
-import ca.ulaval.glo.model.ReviewComment
+import ca.ulaval.glo.model.review.Review
+import ca.ulaval.glo.model.review.comment.ReviewFileComment
 import ca.ulaval.glo.persistence.ReviewPersistence
 import ca.ulaval.glo.util.getRelativeFilePath
-import ca.ulaval.glo.view.dialog.editComment.EditCommentDialog
+import ca.ulaval.glo.view.dialog.comment.EditCommentDialog
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -17,7 +17,7 @@ import com.intellij.psi.PsiFile
 import java.lang.Integer.max
 import java.lang.Integer.min
 
-class AddCommentAction : AnAction() {
+class AddFileCommentAction : AnAction() {
     override fun update(e: AnActionEvent) {
         val project = e.project ?: return
         val review = project.service<ReviewPersistence>().state ?: return
@@ -44,7 +44,7 @@ class AddCommentAction : AnAction() {
         val editCommentDialog = EditCommentDialog()
         if (editCommentDialog.showAndGet()) {
             val reviewComment =
-                ReviewComment(
+                ReviewFileComment(
                     getRelativeFilePath(project, virtualFile),
                     startingLine,
                     selectionStartingLine,
@@ -52,7 +52,7 @@ class AddCommentAction : AnAction() {
                     codeSnippet,
                     editCommentDialog.getDetails()
                 )
-            persistReviewComment(review, reviewComment, project, containingFile)
+            persistFileComment(review, reviewComment, project, containingFile)
         }
     }
 
@@ -104,13 +104,13 @@ class AddCommentAction : AnAction() {
         )
     }
 
-    private fun persistReviewComment(
+    private fun persistFileComment(
         review: Review,
-        reviewComment: ReviewComment,
+        fileComment: ReviewFileComment,
         project: Project,
         containingFile: PsiFile
     ) {
-        review.addComment(reviewComment)
+        review.addComment(fileComment)
         DaemonCodeAnalyzer.getInstance(project).restart(containingFile)
     }
 }

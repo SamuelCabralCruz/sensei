@@ -1,6 +1,6 @@
-package ca.ulaval.glo.view.dialog.editReview
+package ca.ulaval.glo.view.dialog.review
 
-import ca.ulaval.glo.model.ReviewDetails
+import ca.ulaval.glo.model.review.ReviewDetails
 import ca.ulaval.glo.view.dialog.Label
 import ca.ulaval.glo.view.dialog.Panel
 import ca.ulaval.glo.view.dialog.validation.ValidationError
@@ -80,7 +80,11 @@ class EditReviewDialog() : DialogWrapper(true) {
     }
 
     fun getDetails(): ReviewDetails {
-        return ReviewDetails(getReviewer(), getTeamNumber(), getEvaluationName())
+        return ReviewDetails(
+            getReviewer(),
+            getTeamNumber(),
+            getEvaluationName()
+        )
     }
 
     private fun getReviewer(): String? {

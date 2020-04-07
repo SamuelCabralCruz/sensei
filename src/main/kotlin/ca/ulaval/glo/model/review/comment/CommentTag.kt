@@ -1,4 +1,4 @@
-package ca.ulaval.glo.model
+package ca.ulaval.glo.model.review.comment
 
 enum class CommentTag(val value: String) {
     ARCHITECTURE("Architecture"),

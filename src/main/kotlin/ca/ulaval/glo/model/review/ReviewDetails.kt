@@ -1,4 +1,6 @@
-package ca.ulaval.glo.model
+package ca.ulaval.glo.model.review
+
+import ca.ulaval.glo.model.ValueObject
 
 class ReviewDetails() : ValueObject() {
     var reviewer: String? = null

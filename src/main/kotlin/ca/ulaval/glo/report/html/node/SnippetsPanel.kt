@@ -1,7 +1,7 @@
 package ca.ulaval.glo.report.html.node
 
-import ca.ulaval.glo.model.Review
-import ca.ulaval.glo.model.ReviewComment
+import ca.ulaval.glo.model.review.Review
+import ca.ulaval.glo.model.review.comment.ReviewFileComment
 import ca.ulaval.glo.report.html.HtmlBuffer
 import org.apache.commons.text.StringEscapeUtils
 
@@ -50,7 +50,7 @@ class SnippetsPanel(private val review: Review) : HtmlNode() {
     private fun appendSnippets(buffer: HtmlBuffer) {
         buffer.append("<div class='snippets'>")
         buffer.increaseIndent()
-        review.comments.forEach(fun(_, fileComments) {
+        review.filesComments.forEach(fun(_, fileComments) {
             fileComments.sortBy { it.startingLine }
             fileComments.forEachIndexed(fun(index, fileComment) {
                 appendSnippet(buffer, index, fileComment)
@@ -60,25 +60,25 @@ class SnippetsPanel(private val review: Review) : HtmlNode() {
         buffer.append("</div>")
     }
 
-    private fun appendSnippet(buffer: HtmlBuffer, index: Int, comment: ReviewComment) {
-        buffer.append("<div key='${comment.hashCode()}-$index' class='snippet'>")
+    private fun appendSnippet(buffer: HtmlBuffer, index: Int, fileComment: ReviewFileComment) {
+        buffer.append("<div key='${fileComment.hashCode()}-$index' class='snippet'>")
         buffer.increaseIndent()
-        buffer.append("<pre ${getPreProps(comment)}><code class='language-${getBrush()}'>")
+        buffer.append("<pre ${getPreProps(fileComment)}><code class='language-${getBrush()}'>")
         buffer.increaseIndent()
-        buffer.appendWithoutIndent(StringEscapeUtils.escapeHtml4(comment.codeSnippet))
+        buffer.appendWithoutIndent(StringEscapeUtils.escapeHtml4(fileComment.codeSnippet))
         buffer.decreaseIndent()
         buffer.append("</code></pre>")
         buffer.decreaseIndent()
         buffer.append("</div>")
     }
 
-    private fun getPreProps(comment: ReviewComment) =
-        "class='line-numbers' ${getOtherAttributes(comment)}"
+    private fun getPreProps(fileComment: ReviewFileComment) =
+        "class='line-numbers' ${getOtherAttributes(fileComment)}"
 
-    private fun getOtherAttributes(comment: ReviewComment): String {
+    private fun getOtherAttributes(fileComment: ReviewFileComment): String {
         val otherAttributes = mutableListOf<String>()
-        otherAttributes.add("data-start='${comment.startingLine}'")
-        otherAttributes.add("data-line='${comment.highlightStartingLine}-${comment.highlightEndingLine}'")
+        otherAttributes.add("data-start='${fileComment.startingLine}'")
+        otherAttributes.add("data-line='${fileComment.highlightStartingLine}-${fileComment.highlightEndingLine}'")
         otherAttributes.add("style='white-space:pre-wrap;'")
         return otherAttributes.joinToString(" ")
     }

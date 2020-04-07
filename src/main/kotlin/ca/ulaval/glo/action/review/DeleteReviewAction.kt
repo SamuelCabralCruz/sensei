@@ -1,4 +1,4 @@
-package ca.ulaval.glo.action
+package ca.ulaval.glo.action.review
 
 import ca.ulaval.glo.persistence.ReviewPersistence
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer

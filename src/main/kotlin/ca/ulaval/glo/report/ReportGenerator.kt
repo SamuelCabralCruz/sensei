@@ -1,6 +1,6 @@
 package ca.ulaval.glo.report
 
-import ca.ulaval.glo.model.Review
+import ca.ulaval.glo.model.review.Review
 import ca.ulaval.glo.report.file.copyResourcesRecursively
 import ca.ulaval.glo.report.file.createDirectories
 import ca.ulaval.glo.report.file.deleteDirectory

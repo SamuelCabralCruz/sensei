@@ -1,4 +1,6 @@
-package ca.ulaval.glo.model
+package ca.ulaval.glo.model.review.comment
+
+import ca.ulaval.glo.model.ValueObject
 
 class ReviewCommentDetails() : ValueObject() {
     var label = ""
@@ -12,9 +14,13 @@ class ReviewCommentDetails() : ValueObject() {
     }
 
     fun clone(): ReviewCommentDetails {
-        return ReviewCommentDetails(label, description, tags.toMutableList())
+        return ReviewCommentDetails(
+            label,
+            description,
+            tags.toMutableList()
+        )
     }
 
-    // TODO: IMPORTANT for combo box populating
+    // TODO: IMPORTANT for populating combo box edit comment dialog
     override fun toString(): String = label
 }

@@ -1,9 +1,9 @@
-package ca.ulaval.glo.view.dialog.editComment
+package ca.ulaval.glo.view.dialog.comment
 
-import ca.ulaval.glo.model.CommentTag
-import ca.ulaval.glo.model.ReviewComment
-import ca.ulaval.glo.model.ReviewCommentDetails
-import ca.ulaval.glo.model.getAllPresetReviewCommentDetails
+import ca.ulaval.glo.model.review.comment.CommentTag
+import ca.ulaval.glo.model.review.comment.ReviewComment
+import ca.ulaval.glo.model.review.comment.ReviewCommentDetails
+import ca.ulaval.glo.model.review.comment.getAllPresetReviewCommentDetails
 import ca.ulaval.glo.view.dialog.Label
 import ca.ulaval.glo.view.dialog.Panel
 import ca.ulaval.glo.view.dialog.SimpleKeyListener
@@ -30,8 +30,8 @@ class EditCommentDialog() : DialogWrapper(true) {
     private val descriptionField = JBTextArea()
     private var tagFields = mutableMapOf<CommentTag, JBCheckBox>()
 
-    constructor(reviewComment: ReviewComment) : this() {
-        fillFormWithReviewCommentDetails(reviewComment.details)
+    constructor(comment: ReviewComment) : this() {
+        fillFormWithReviewCommentDetails(comment.details)
     }
 
     init {
@@ -132,7 +132,11 @@ class EditCommentDialog() : DialogWrapper(true) {
     }
 
     fun getDetails(): ReviewCommentDetails {
-        return ReviewCommentDetails(getLabel(), getDescription(), getTags())
+        return ReviewCommentDetails(
+            getLabel(),
+            getDescription(),
+            getTags()
+        )
     }
 
     private fun getLabel() = presets.editor.item.toString()

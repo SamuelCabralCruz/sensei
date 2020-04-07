@@ -1,8 +1,8 @@
 package ca.ulaval.glo.report.html.node
 
-import ca.ulaval.glo.model.CommentTag
-import ca.ulaval.glo.model.Review
-import ca.ulaval.glo.model.ReviewComment
+import ca.ulaval.glo.model.review.comment.CommentTag
+import ca.ulaval.glo.model.review.Review
+import ca.ulaval.glo.model.review.comment.ReviewFileComment
 import ca.ulaval.glo.report.file.comparator.GroupSourceAndTestFilesPathComparator
 import ca.ulaval.glo.report.html.HtmlBuffer
 import java.time.Instant
@@ -48,7 +48,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
     private fun appendFilesComments(buffer: HtmlBuffer) {
         buffer.append("<div class='files-comments'>")
         buffer.increaseIndent()
-        review.comments.toSortedMap(GroupSourceAndTestFilesPathComparator()).forEach(fun(fileName, fileComments) {
+        review.filesComments.toSortedMap(GroupSourceAndTestFilesPathComparator()).forEach(fun(fileName, fileComments) {
             appendFileComments(buffer, fileName, fileComments)
         })
         buffer.decreaseIndent()
@@ -58,7 +58,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
     private fun appendFileComments(
         buffer: HtmlBuffer,
         fileName: String,
-        fileComments: MutableList<ReviewComment>
+        fileComments: MutableList<ReviewFileComment>
     ) {
         buffer.append("<details key='$fileName' class='file-comments'>")
         buffer.increaseIndent()
@@ -78,7 +78,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
     private fun appendFileComment(
         buffer: HtmlBuffer,
         index: Int,
-        fileComment: ReviewComment
+        fileComment: ReviewFileComment
     ) {
         buffer.append("<div key='${fileComment.hashCode()}-$index' class='file-comment'>")
         buffer.increaseIndent()
@@ -94,7 +94,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
 
     private fun appendFileCommentContent(
         buffer: HtmlBuffer,
-        fileComment: ReviewComment
+        fileComment: ReviewFileComment
     ) {
         buffer.append("<div class='file-comment-content'>")
         buffer.increaseIndent()
@@ -106,7 +106,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
 
     private fun appendFileCommentContentHeader(
         buffer: HtmlBuffer,
-        fileComment: ReviewComment
+        fileComment: ReviewFileComment
     ) {
         buffer.append("<div class='file-comment-content-header'>")
         buffer.increaseIndent()
@@ -117,7 +117,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
 
     private fun appendFileCommentContentBody(
         buffer: HtmlBuffer,
-        fileComment: ReviewComment
+        fileComment: ReviewFileComment
     ) {
         val tags = fileComment.details.tags
         val description = fileComment.details.description

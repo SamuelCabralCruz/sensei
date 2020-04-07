@@ -1,8 +1,8 @@
 package ca.ulaval.glo.view.lineMarker
 
-import ca.ulaval.glo.action.EditCommentAction
-import ca.ulaval.glo.action.RemoveCommentAction
-import ca.ulaval.glo.model.ReviewComment
+import ca.ulaval.glo.action.comment.file.EditFileCommentAction
+import ca.ulaval.glo.action.comment.file.RemoveFileCommentAction
+import ca.ulaval.glo.model.review.comment.ReviewFileComment
 import ca.ulaval.glo.persistence.ReviewPersistence
 import ca.ulaval.glo.util.prepend
 import ca.ulaval.glo.util.wrap
@@ -15,19 +15,19 @@ import com.intellij.psi.PsiElement
 import com.intellij.util.Function
 
 class CommentLineMarkerFactory {
-    fun create(element: PsiElement, reviewComment: ReviewComment): CommentLineMarker {
+    fun create(element: PsiElement, fileComment: ReviewFileComment): CommentLineMarker {
         return CommentLineMarker(
             element,
-            createCommentLineMarkerTooltipProvider(reviewComment),
-            CommentLineMarkerActionGroup(element, reviewComment)
+            createCommentLineMarkerTooltipProvider(fileComment),
+            CommentLineMarkerActionGroup(element, fileComment)
         )
     }
 
-    private fun createCommentLineMarkerTooltipProvider(reviewComment: ReviewComment): Function<PsiElement, String> {
+    private fun createCommentLineMarkerTooltipProvider(fileComment: ReviewFileComment): Function<PsiElement, String> {
         return Function {
             val tooltip = StringBuilder()
             tooltip.append("Code Review Comment")
-            val reviewCommentDetails = reviewComment.details
+            val reviewCommentDetails = fileComment.details
             tooltip.append("\n\nLabel:\n")
             tooltip.append(reviewCommentDetails.label)
             val description = reviewCommentDetails.description
@@ -46,7 +46,7 @@ class CommentLineMarkerFactory {
 
     private class CommentLineMarkerActionGroup(
         private val element: PsiElement,
-        private val reviewComment: ReviewComment
+        private val fileComment: ReviewFileComment
     ) :
         DefaultActionGroup() {
         init {
@@ -57,14 +57,14 @@ class CommentLineMarkerFactory {
             add(
                 LineMarkerActionWrapper(
                     element,
-                    EditCommentAction(reviewComment)
+                    EditFileCommentAction(fileComment)
                 )
             )
             add(Separator())
             add(
                 LineMarkerActionWrapper(
                     element,
-                    RemoveCommentAction(reviewComment)
+                    RemoveFileCommentAction(fileComment)
                 )
             )
             add(Separator())

@@ -17,23 +17,24 @@
     <actions>
         <group id="sensei.actions" text="Sensei">
             <add-to-group group-id="MainMenu" anchor="last"/>
-            <action class="ca.ulaval.glo.action.CreateReviewAction" id="sensei.actions.createReview"
+            <action class="ca.ulaval.glo.action.review.CreateReviewAction" id="sensei.actions.createReview"
                     text="Create Review">
             </action>
-            <action class="ca.ulaval.glo.action.AddCommentAction" id="sensei.actions.addComment" text="Add Comment">
+            <action class="ca.ulaval.glo.action.comment.file.AddFileCommentAction" id="sensei.actions.addComment"
+                    text="Add File Comment">
                 <keyboard-shortcut first-keystroke="control shift F5" keymap="$default" replace-all="true"/>
             </action>
-            <action class="ca.ulaval.glo.action.GenerateReportAction" id="sensei.actions.generateReport"
+            <action class="ca.ulaval.glo.action.report.GenerateReportAction" id="sensei.actions.generateReport"
                     text="Generate Report">
                 <keyboard-shortcut first-keystroke="control shift F6" keymap="$default" replace-all="true"/>
             </action>
-            <action class="ca.ulaval.glo.action.CloseReviewAction" id="sensei.actions.closeReview"
+            <action class="ca.ulaval.glo.action.review.CloseReviewAction" id="sensei.actions.closeReview"
                     text="Close Review">
             </action>
-            <action class="ca.ulaval.glo.action.ReopenReviewAction" id="sensei.actions.reopenReview"
+            <action class="ca.ulaval.glo.action.review.ReopenReviewAction" id="sensei.actions.reopenReview"
                     text="Reopen Review">
             </action>
-            <action class="ca.ulaval.glo.action.DeleteReviewAction" id="sensei.actions.deleteReview"
+            <action class="ca.ulaval.glo.action.review.DeleteReviewAction" id="sensei.actions.deleteReview"
                     text="Delete Review">
             </action>
         </group>

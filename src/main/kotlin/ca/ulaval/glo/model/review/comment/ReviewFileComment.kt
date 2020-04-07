@@ -1,12 +1,11 @@
-package ca.ulaval.glo.model
+package ca.ulaval.glo.model.review.comment
 
-class ReviewComment() : ValueObject() {
+class ReviewFileComment() : ReviewComment() {
     var filePath = ""
     var startingLine = 0
     var highlightStartingLine = 0
     var highlightEndingLine = 0
     var codeSnippet = ""
-    var details = ReviewCommentDetails()
 
     constructor(
         _filePath: String,
@@ -24,8 +23,8 @@ class ReviewComment() : ValueObject() {
         details = _details
     }
 
-    fun clone(): ReviewComment {
-        return ReviewComment(
+    fun clone(): ReviewFileComment {
+        return ReviewFileComment(
             filePath,
             startingLine,
             highlightStartingLine,
