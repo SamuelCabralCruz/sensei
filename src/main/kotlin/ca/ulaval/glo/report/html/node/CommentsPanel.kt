@@ -1,7 +1,6 @@
 package ca.ulaval.glo.report.html.node
 
 import ca.ulaval.glo.model.review.Review
-import ca.ulaval.glo.model.review.comment.CommentTag
 import ca.ulaval.glo.model.review.comment.ReviewComment
 import ca.ulaval.glo.model.review.comment.ReviewFileComment
 import ca.ulaval.glo.model.review.comment.ReviewGeneralComment
@@ -65,12 +64,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
     }
 
     private fun appendGeneralComment(buffer: HtmlBuffer, index: Int, generalComment: ReviewGeneralComment) {
-        buffer.append("<div key='${generalComment.hashCode()}-$index' class='general-comment'>")
-        buffer.increaseIndent()
-        appendCommentLogo(buffer)
-        appendCommentContent(buffer, generalComment)
-        buffer.decreaseIndent()
-        buffer.append("</div>")
+        appendComment(buffer, index, generalComment, "general-comment")
     }
 
     private fun appendFilesComments(buffer: HtmlBuffer) {
@@ -113,74 +107,85 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
         index: Int,
         fileComment: ReviewFileComment
     ) {
-        buffer.append("<div key='${fileComment.hashCode()}-$index' class='file-comment'>")
+        appendComment(buffer, index, fileComment, "file-comment")
+    }
+
+    private fun appendComment(buffer: HtmlBuffer, index: Int, comment: ReviewComment, cssClass: String) {
+        buffer.append("<div key='${comment.hashCode()}-$index' class='comment $cssClass'>")
         buffer.increaseIndent()
-        appendCommentLogo(buffer)
-        appendCommentContent(buffer, fileComment)
+        appendCommentHeader(buffer, comment)
+        appendCommentBody(buffer, comment)
         buffer.decreaseIndent()
         buffer.append("</div>")
     }
 
-    private fun appendCommentLogo(buffer: HtmlBuffer) {
-        buffer.append("<img class='comment-logo' src='assets/img/lotus.png' type='image/png'/>")
+    private fun appendCommentHeader(buffer: HtmlBuffer, comment: ReviewComment) {
+        buffer.append("<div class='comment-header'>")
+        buffer.increaseIndent()
+        appendCommentHeaderLogo(buffer)
+        appendCommentHeaderLabel(buffer, comment)
+        buffer.decreaseIndent()
+        buffer.append("</div>")
     }
 
-    private fun appendCommentContent(
+    private fun appendCommentHeaderLogo(buffer: HtmlBuffer) {
+        buffer.append("<img class='comment-header-logo' src='assets/img/lotus.png' type='image/png'/>")
+    }
+
+    private fun appendCommentHeaderLabel(
         buffer: HtmlBuffer,
         comment: ReviewComment
     ) {
-        buffer.append("<div class='comment-content'>")
+        buffer.append("<div class='comment-header-label'>")
         buffer.increaseIndent()
-        appendCommentContentHeader(buffer, comment)
-        appendCommentContentBody(buffer, comment)
+        buffer.append(getCommentLabel(comment))
         buffer.decreaseIndent()
         buffer.append("</div>")
     }
 
-    private fun appendCommentContentHeader(
-        buffer: HtmlBuffer,
-        comment: ReviewComment
-    ) {
-        buffer.append("<div class='comment-content-header'>")
-        buffer.increaseIndent()
-        appendCommentContentLabel(comment, buffer)
-        buffer.decreaseIndent()
-        buffer.append("</div>")
-    }
-
-    private fun appendCommentContentLabel(
-        comment: ReviewComment,
-        buffer: HtmlBuffer
-    ) {
+    private fun getCommentLabel(comment: ReviewComment): String {
         var contentHeader = ""
         if (comment is ReviewFileComment) {
             contentHeader += "Line ${comment.highlightStartingLine} - "
         }
         contentHeader += comment.details.label
-        buffer.append(contentHeader)
+        return contentHeader
     }
 
-    private fun appendCommentContentBody(
-        buffer: HtmlBuffer,
-        comment: ReviewComment
-    ) {
-        val tags = comment.details.tags
-        val description = comment.details.description
-        if (tags.isEmpty() && description.isBlank()) return
-        buffer.append("<div class='comment-content-body'>")
+    private fun appendCommentBody(buffer: HtmlBuffer, comment: ReviewComment) {
+        buffer.append("<div class='comment-body'>")
         buffer.increaseIndent()
-        appendCommentTags(buffer, tags)
-        appendCommentDescription(description, buffer)
+        appendCommentBodyContent(buffer, comment)
         buffer.decreaseIndent()
         buffer.append("</div>")
     }
 
-    private fun appendCommentTags(
+    private fun appendCommentBodyContent(
         buffer: HtmlBuffer,
-        tags: MutableList<CommentTag>
+        comment: ReviewComment
     ) {
+        if (isCommentWithoutContent(comment)) return
+        buffer.append("<div class='comment-body-content'>")
+        buffer.increaseIndent()
+        appendCommentBodyContentTags(buffer, comment)
+        appendCommentBodyContentDescription(buffer, comment)
+        buffer.decreaseIndent()
+        buffer.append("</div>")
+    }
+
+    private fun isCommentWithoutContent(comment: ReviewComment): Boolean {
+        val tags = comment.details.tags
+        val description = comment.details.description
+        return tags.isEmpty() && description.isBlank()
+    }
+
+    private fun appendCommentBodyContentTags(
+        buffer: HtmlBuffer,
+        comment: ReviewComment
+    ) {
+        val tags = comment.details.tags
         if (tags.isEmpty()) return
-        buffer.append("<div class='comment-content-body-tags'>")
+        buffer.append("<div class='comment-body-content-tags'>")
         buffer.increaseIndent()
         tags.forEach(fun(tag) {
             val tagClassName = tag.value.toLowerCase().split(" ").joinToString("-")
@@ -190,9 +195,13 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
         buffer.append("</div>")
     }
 
-    private fun appendCommentDescription(description: String, buffer: HtmlBuffer) {
+    private fun appendCommentBodyContentDescription(
+        buffer: HtmlBuffer,
+        comment: ReviewComment
+    ) {
+        val description = comment.details.description
         if (description.isBlank()) return
-        buffer.append("<div class='comment-content-body-description'>$description</div>")
+        buffer.append("<div class='comment-body-content-description'>$description</div>")
     }
 
     private fun appendCopyright(buffer: HtmlBuffer) {
