@@ -1,8 +1,10 @@
 package ca.ulaval.glo.report.html.node
 
-import ca.ulaval.glo.model.review.comment.CommentTag
 import ca.ulaval.glo.model.review.Review
+import ca.ulaval.glo.model.review.comment.CommentTag
+import ca.ulaval.glo.model.review.comment.ReviewComment
 import ca.ulaval.glo.model.review.comment.ReviewFileComment
+import ca.ulaval.glo.model.review.comment.ReviewGeneralComment
 import ca.ulaval.glo.report.file.comparator.GroupSourceAndTestFilesPathComparator
 import ca.ulaval.glo.report.html.HtmlBuffer
 import java.time.Instant
@@ -14,6 +16,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
         buffer.append("<div class='comments-panel'>")
         buffer.increaseIndent()
         appendCommentsPanelHeader(buffer)
+        appendGeneralComments(buffer)
         appendFilesComments(buffer)
         appendCopyright(buffer)
     }
@@ -45,12 +48,42 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
         buffer.append("</div>")
     }
 
+    private fun appendGeneralComments(buffer: HtmlBuffer) {
+        buffer.append("<div class='general-comments'>")
+        buffer.increaseIndent()
+        buffer.append("<div class='general-comments-title'>General Comments</div>")
+        buffer.append("<div class='general-comments-content'>")
+        buffer.increaseIndent()
+        review.generalComments.sortBy { it.details.label }
+        review.generalComments.forEachIndexed(fun(index, generalComment) {
+            appendGeneralComment(buffer, index, generalComment)
+        })
+        buffer.decreaseIndent()
+        buffer.append("</div>")
+        buffer.decreaseIndent()
+        buffer.append("</div>")
+    }
+
+    private fun appendGeneralComment(buffer: HtmlBuffer, index: Int, generalComment: ReviewGeneralComment) {
+        buffer.append("<div key='${generalComment.hashCode()}-$index' class='general-comment'>")
+        buffer.increaseIndent()
+        appendCommentLogo(buffer)
+        appendCommentContent(buffer, generalComment)
+        buffer.decreaseIndent()
+        buffer.append("</div>")
+    }
+
     private fun appendFilesComments(buffer: HtmlBuffer) {
         buffer.append("<div class='files-comments'>")
+        buffer.increaseIndent()
+        buffer.append("<div class='files-comments-title'>Specific Comments</div>")
+        buffer.append("<div class='files-comments-content'>")
         buffer.increaseIndent()
         review.filesComments.toSortedMap(GroupSourceAndTestFilesPathComparator()).forEach(fun(fileName, fileComments) {
             appendFileComments(buffer, fileName, fileComments)
         })
+        buffer.decreaseIndent()
+        buffer.append("</div>")
         buffer.decreaseIndent()
         buffer.append("</div>")
     }
@@ -82,55 +115,60 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
     ) {
         buffer.append("<div key='${fileComment.hashCode()}-$index' class='file-comment'>")
         buffer.increaseIndent()
-        appendFileCommentLogo(buffer)
-        appendFileCommentContent(buffer, fileComment)
+        appendCommentLogo(buffer)
+        appendCommentContent(buffer, fileComment)
         buffer.decreaseIndent()
         buffer.append("</div>")
     }
 
-    private fun appendFileCommentLogo(buffer: HtmlBuffer) {
-        buffer.append("<img class='file-comment-logo' src='assets/img/lotus.png' type='image/png'/>")
+    private fun appendCommentLogo(buffer: HtmlBuffer) {
+        buffer.append("<img class='comment-logo' src='assets/img/lotus.png' type='image/png'/>")
     }
 
-    private fun appendFileCommentContent(
+    private fun appendCommentContent(
         buffer: HtmlBuffer,
-        fileComment: ReviewFileComment
+        comment: ReviewComment
     ) {
-        buffer.append("<div class='file-comment-content'>")
+        buffer.append("<div class='comment-content'>")
         buffer.increaseIndent()
-        appendFileCommentContentHeader(buffer, fileComment)
-        appendFileCommentContentBody(buffer, fileComment)
+        appendCommentContentHeader(buffer, comment)
+        appendCommentContentBody(buffer, comment)
         buffer.decreaseIndent()
         buffer.append("</div>")
     }
 
-    private fun appendFileCommentContentHeader(
+    private fun appendCommentContentHeader(
         buffer: HtmlBuffer,
-        fileComment: ReviewFileComment
+        comment: ReviewComment
     ) {
-        buffer.append("<div class='file-comment-content-header'>")
+        buffer.append("<div class='comment-content-header'>")
         buffer.increaseIndent()
-        buffer.append("Line ${fileComment.highlightStartingLine} - ${fileComment.details.label}")
+        var contentHeader = ""
+        if (comment is ReviewFileComment) {
+            contentHeader += "Line ${comment.highlightStartingLine} - "
+        }
+        contentHeader += comment.details.label
+        buffer.append(contentHeader)
         buffer.decreaseIndent()
         buffer.append("</div>")
     }
 
-    private fun appendFileCommentContentBody(
+    private fun appendCommentContentBody(
         buffer: HtmlBuffer,
-        fileComment: ReviewFileComment
+        comment: ReviewComment
     ) {
-        val tags = fileComment.details.tags
-        val description = fileComment.details.description
+        val tags = comment.details.tags
+        val description = comment.details.description
         if (tags.isEmpty() && description.isBlank()) return
-        buffer.append("<div class='file-comment-content-body'>")
+        buffer.append("<div class='comment-content-body'>")
         buffer.increaseIndent()
-        if (tags.isNotEmpty()) appendFileCommentTags(buffer, tags)
+        if (tags.isNotEmpty()) appendCommentTags(buffer, tags)
         if (description.isNotBlank()) buffer.append("<div>$description</div>")
         buffer.decreaseIndent()
         buffer.append("</div>")
     }
 
-    private fun appendFileCommentTags(
+    private fun appendCommentTags(
         buffer: HtmlBuffer,
         tags: MutableList<CommentTag>
     ) {

@@ -57,28 +57,28 @@ body {
     align-self: center;
 }
 
-.file-comments-summary {
-    word-wrap: break-word;
-    cursor: pointer;
-    outline: none;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    font-size: medium;
+.general-comments,
+.files-comments {
+    padding: 1em 0;
+}
+
+.general-comments-title,
+.files-comments-title {
     font-weight: bold;
+    font-size: 2.25vh;
+    align-self: center;
 }
 
-.file-comments-summary::marker {
-    font-size: larger;
+.general-comments-content,
+.files-comments-content {
+    padding-left: 1.5em;
 }
 
-.file-comments-details {
-    display: grid;
-    grid-template-columns: 1fr;
-    padding-left: 1em;
+.files-comments-content {
+    padding-top: 1em;
 }
 
+.general-comment,
 .file-comment {
     display: grid;
     grid-template-columns: 2em 1fr;
@@ -87,6 +87,7 @@ body {
     margin: 0.5em 0;
 }
 
+.general-comment:after,
 .file-comment:after {
     content: "";
     width: 100%;
@@ -99,21 +100,45 @@ body {
     transition: opacity 0.1s ease-in-out;
 }
 
+.general-comment:hover:after,
 .file-comment:hover:after {
     opacity: 1;
     transition: opacity 0.1s ease-in-out;
 }
 
-.file-comment-logo {
+.file-comments-summary {
+    word-wrap: break-word;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    font-size: medium;
+    font-weight: bold;
+    padding: 0.5em 0;
+}
+
+.file-comments-summary::marker {
+    font-size: larger;
+}
+
+.file-comments-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-left: 1em;
+}
+
+.comment-logo {
     width: 100%;
 }
 
-.file-comment-content {
+.comment-content {
     display: grid;
     grid-template-rows: 2em 1fr;
 }
 
-.file-comment-content-header {
+.comment-content-header {
     align-self: center;
 }
 
