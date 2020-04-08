@@ -153,6 +153,7 @@ body {
     align-items: center;
     justify-content: center;
     background-color: #F92C64;
+    overflow: hidden;
 }
 
 .snippets-panel-empty-state {
@@ -199,5 +200,11 @@ body {
 
     .layout {
         grid-template-columns: 1fr;
+    }
+}
+
+@media only screen and (max-height: 700px) {
+    .snippets-panel-empty-state-image {
+        display: none;
     }
 }
