@@ -40,7 +40,7 @@ body {
 
 .comments-panel-header-title {
     font-weight: bold;
-    font-size: 4vh;
+    font-size: 2.5rem;
     align-self: center;
 }
 
@@ -65,7 +65,7 @@ body {
 .general-comments-title,
 .files-comments-title {
     font-weight: bold;
-    font-size: 2.25vh;
+    font-size: 1.25rem;
     align-self: center;
 }
 
@@ -142,6 +142,10 @@ body {
     align-self: center;
 }
 
+.comment-content-body-tags {
+    padding: 0.25em;
+}
+
 .snippets-panel {
     background-color: #ededed;
 }
@@ -185,7 +189,7 @@ body {
 
 .copyright {
     width: 100%;
-    font-size: 1.5vh;
+    font-size: 0.85rem;
     padding-top: 4em;
     flex: 1;
     display: flex;

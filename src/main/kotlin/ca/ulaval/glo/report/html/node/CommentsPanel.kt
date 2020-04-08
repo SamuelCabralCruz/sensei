@@ -143,14 +143,21 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
     ) {
         buffer.append("<div class='comment-content-header'>")
         buffer.increaseIndent()
+        appendCommentContentLabel(comment, buffer)
+        buffer.decreaseIndent()
+        buffer.append("</div>")
+    }
+
+    private fun appendCommentContentLabel(
+        comment: ReviewComment,
+        buffer: HtmlBuffer
+    ) {
         var contentHeader = ""
         if (comment is ReviewFileComment) {
             contentHeader += "Line ${comment.highlightStartingLine} - "
         }
         contentHeader += comment.details.label
         buffer.append(contentHeader)
-        buffer.decreaseIndent()
-        buffer.append("</div>")
     }
 
     private fun appendCommentContentBody(
@@ -162,8 +169,8 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
         if (tags.isEmpty() && description.isBlank()) return
         buffer.append("<div class='comment-content-body'>")
         buffer.increaseIndent()
-        if (tags.isNotEmpty()) appendCommentTags(buffer, tags)
-        if (description.isNotBlank()) buffer.append("<div>$description</div>")
+        appendCommentTags(buffer, tags)
+        appendCommentDescription(description, buffer)
         buffer.decreaseIndent()
         buffer.append("</div>")
     }
@@ -172,7 +179,8 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
         buffer: HtmlBuffer,
         tags: MutableList<CommentTag>
     ) {
-        buffer.append("<div>")
+        if (tags.isEmpty()) return
+        buffer.append("<div class='comment-content-body-tags'>")
         buffer.increaseIndent()
         tags.forEach(fun(tag) {
             val tagClassName = tag.value.toLowerCase().split(" ").joinToString("-")
@@ -180,6 +188,11 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
         })
         buffer.decreaseIndent()
         buffer.append("</div>")
+    }
+
+    private fun appendCommentDescription(description: String, buffer: HtmlBuffer) {
+        if (description.isBlank()) return
+        buffer.append("<div class='comment-content-body-description'>$description</div>")
     }
 
     private fun appendCopyright(buffer: HtmlBuffer) {
