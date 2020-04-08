@@ -1,5 +1,6 @@
 package ca.ulaval.glo.model.review.comment
 
+import ca.ulaval.glo.model.review.comment.CommentTag.ARCHITECTURE
 import ca.ulaval.glo.model.review.comment.CommentTag.CLEAN_CODE
 import kotlin.reflect.full.declaredMemberProperties
 
@@ -268,10 +269,34 @@ class PresetReviewCommentDetails {
         "[T09] - Tests Should Be Fast",
         "A slow test is a test that won’t get run. When things get tight, it’s the slow tests that will be dropped from the suite. So do what you must to keep your tests fast.",
     )
+    val solid1SingleResponsibilityPrinciple = createSolidPrinciplesComment(
+        "[SOLID1] - Single Responsibility Principle (SRP)",
+        "A class should have one and only one reason to change, meaning that a class should have only one job."
+    )
+    val solid2OpenClosedPrinciple = createSolidPrinciplesComment(
+        "[SOLID2] - Open-Closed Principle (OCP)",
+        "Objects or entities should be open for extension, but closed for modification."
+    )
+    val solid3LiskovSubstitutionPrinciple = createSolidPrinciplesComment(
+        "[SOLID3] - Liskov Substitution Principle",
+        "Let q(x) be a property provable about objects of x of type T. Then q(y) should be provable for objects y of type S where S is a subtype of T."
+    )
+    val solid4InterfaceSegregationPrinciple = createSolidPrinciplesComment(
+        "[SOLID4] - Interface Segregation Principle",
+        "A client should never be forced to implement an interface that it doesn't use or clients shouldn't be forced to depend on methods they do not use."
+    )
+    val solid5DependencyInversionPrinciple = createSolidPrinciplesComment(
+        "[SOLID5] - Dependency Inversion Principle",
+        "Entities must depend on abstractions not on concretions. It states that the high level module must not depend on the low level module, but they should depend on abstractions."
+    )
 }
 
 fun createCleanCodeComment(label: String, description: String): ReviewCommentDetails {
     return ReviewCommentDetails(label, description, mutableListOf(CLEAN_CODE))
+}
+
+fun createSolidPrinciplesComment(label: String, description: String): ReviewCommentDetails {
+    return ReviewCommentDetails(label, description, mutableListOf(ARCHITECTURE))
 }
 
 fun getAllPresetReviewCommentDetails(): Array<ReviewCommentDetails> {
