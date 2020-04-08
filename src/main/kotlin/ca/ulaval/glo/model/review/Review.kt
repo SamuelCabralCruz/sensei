@@ -24,8 +24,16 @@ class Review {
         return isCreated() && status == ReviewStatus.CLOSED
     }
 
-    fun isNotEmpty(): Boolean {
+    fun hasGeneralComments(): Boolean {
+        return isCreated() && generalComments.isNotEmpty()
+    }
+
+    fun hasFileComments(): Boolean {
         return isCreated() && filesComments.isNotEmpty()
+    }
+
+    fun isNotEmpty(): Boolean {
+        return hasGeneralComments() || hasFileComments()
     }
 
     fun create(project: Project, reviewDetails: ReviewDetails) {

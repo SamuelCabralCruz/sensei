@@ -26,6 +26,10 @@
                     text="Add General Comment">
                 <keyboard-shortcut first-keystroke="altGraph F4" keymap="$default" replace-all="true"/>
             </action>
+            <action class="ca.ulaval.glo.action.comment.general.ManageGeneralCommentsAction"
+                    id="sensei.actions.manageGeneralComments"
+                    text="Manage General Comments">
+            </action>
             <action class="ca.ulaval.glo.action.comment.file.AddFileCommentAction"
                     id="sensei.actions.addFileComment"
                     text="Add File Comment">
