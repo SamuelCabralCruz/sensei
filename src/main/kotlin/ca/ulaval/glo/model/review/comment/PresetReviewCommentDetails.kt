@@ -267,7 +267,7 @@ class PresetReviewCommentDetails {
     )
     val cleanCodeT09TestsShouldBeFast = createCleanCodeComment(
         "[T09] - Tests Should Be Fast",
-        "A slow test is a test that won’t get run. When things get tight, it’s the slow tests that will be dropped from the suite. So do what you must to keep your tests fast.",
+        "A slow test is a test that won’t get run. When things get tight, it’s the slow tests that will be dropped from the suite. So do what you must to keep your tests fast."
     )
     val solid1SingleResponsibilityPrinciple = createSolidPrinciplesComment(
         "[SOLID1] - Single Responsibility Principle (SRP)",
@@ -278,15 +278,15 @@ class PresetReviewCommentDetails {
         "Objects or entities should be open for extension, but closed for modification."
     )
     val solid3LiskovSubstitutionPrinciple = createSolidPrinciplesComment(
-        "[SOLID3] - Liskov Substitution Principle",
+        "[SOLID3] - Liskov Substitution Principle (LSP)",
         "Let q(x) be a property provable about objects of x of type T. Then q(y) should be provable for objects y of type S where S is a subtype of T."
     )
     val solid4InterfaceSegregationPrinciple = createSolidPrinciplesComment(
-        "[SOLID4] - Interface Segregation Principle",
+        "[SOLID4] - Interface Segregation Principle (ISP)",
         "A client should never be forced to implement an interface that it doesn't use or clients shouldn't be forced to depend on methods they do not use."
     )
     val solid5DependencyInversionPrinciple = createSolidPrinciplesComment(
-        "[SOLID5] - Dependency Inversion Principle",
+        "[SOLID5] - Dependency Inversion Principle (DIP)",
         "Entities must depend on abstractions not on concretions. It states that the high level module must not depend on the low level module, but they should depend on abstractions."
     )
 }
