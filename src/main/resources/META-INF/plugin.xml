@@ -1,10 +1,28 @@
 <idea-plugin>
     <id>ca.ulaval.glo.sensei</id>
     <name>Sensei - Code Reviews</name>
-    <vendor email="samuelcabralcruz@gmail.com" url="https://github.com/SamuelCabralCruz/sensei">Sensei</vendor>
-    <version>0.0.4</version>
+    <vendor email="samuelcabralcruz@gmail.com" url="https://github.com/SamuelCabralCruz">Samuel Cabral Cruz</vendor>
+    <version>1.0.0</version>
 
-    <description><![CDATA[TODO - placeholder description to be modified later]]></description>
+    <description>
+        This plugin has been developed to ease the work of software engineer courses' assistants that are in charge
+        of going through tons of source files in order to provide feedback and advices to students. With this plugin,
+        you will be able to attach comments to specific piece of code and/or general remarks about the entire project
+        along with producing a simple and good looking static html report ready to be handed.
+    </description>
+    <change-notes>
+        <![CDATA[
+            <h3>Version 1.0.0</h3>
+            <ul>
+                <li>First full-featured version</li>
+            </ul>
+
+            <h3>Versions 0.0.1-0.0.3</h3>
+            <ul>
+                <li>Unstable and incomplete versions dedicated to set up the deployment process</li>
+            </ul>
+        ]]>
+    </change-notes>
 
     <depends>com.intellij.modules.platform</depends>
 
