@@ -46,7 +46,7 @@ code[class*="language"] {
     max-height: inherit;
     height: inherit;
     display: block;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .token.comment,

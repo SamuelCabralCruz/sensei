@@ -164,6 +164,13 @@
             transform: rotate(2deg);
         }
         ```
+    - Hide overflow code block
+        ```css
+        code[class*="language"] {
+            ...
+            overflow: hidden;
+        }
+        ```
 
 ## JQuery
 

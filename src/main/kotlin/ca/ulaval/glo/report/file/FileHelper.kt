@@ -1,5 +1,6 @@
 package ca.ulaval.glo.report.file
 
+import ca.ulaval.glo.report.file.comparator.PathStructure
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -28,4 +29,13 @@ fun replaceInFile(_path: String, oldText: String, newText: String) {
     val content = String(Files.readAllBytes(path))
     val editedContent = content.replace(oldText, newText)
     Files.write(path, editedContent.toByteArray())
+}
+
+fun extractPathStructure(filePath: String): PathStructure {
+    val partitions = filePath.split("/").filter(fun(partition) = partition != "")
+    val containingFolder = partitions.subList(0, partitions.lastIndex).joinToString("/")
+    val fileName = partitions.last()
+    val fileNamePartitions = fileName.split(".")
+    val extension = fileNamePartitions.slice(IntRange(1, fileNamePartitions.lastIndex)).joinToString(".")
+    return PathStructure(filePath, partitions, containingFolder, fileName, extension)
 }

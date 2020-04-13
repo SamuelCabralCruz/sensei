@@ -2,6 +2,7 @@ package ca.ulaval.glo.report.html.node
 
 import ca.ulaval.glo.model.review.Review
 import ca.ulaval.glo.model.review.comment.ReviewFileComment
+import ca.ulaval.glo.report.file.extractPathStructure
 import ca.ulaval.glo.report.html.HtmlBuffer
 import org.apache.commons.text.StringEscapeUtils
 
@@ -63,7 +64,7 @@ class SnippetsPanel(private val review: Review) : HtmlNode() {
     private fun appendSnippet(buffer: HtmlBuffer, index: Int, fileComment: ReviewFileComment) {
         buffer.append("<div key='${fileComment.hashCode()}-$index' class='snippet'>")
         buffer.increaseIndent()
-        buffer.append("<pre ${getPreProps(fileComment)}><code class='language-${getBrush()}'>")
+        buffer.append("<pre ${getPreProps(fileComment)}><code class='language-${getBrush(fileComment.filePath)}'>")
         buffer.increaseIndent()
         buffer.appendWithoutIndent(StringEscapeUtils.escapeHtml4(fileComment.codeSnippet))
         buffer.decreaseIndent()
@@ -83,8 +84,15 @@ class SnippetsPanel(private val review: Review) : HtmlNode() {
         return otherAttributes.joinToString(" ")
     }
 
-    // TODO: determine dynamic brushes
-    private fun getBrush() = "java"
+    private fun getBrush(filePath: String): String {
+        return when (extractPathStructure(filePath).extension) {
+            "java" -> "java"
+            "xml" -> "xml"
+            else -> {
+                ""
+            }
+        }
+    }
 
     override fun closeTag(buffer: HtmlBuffer) {
         buffer.decreaseIndent()
