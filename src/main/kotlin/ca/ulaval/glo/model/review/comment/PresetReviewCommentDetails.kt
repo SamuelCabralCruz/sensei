@@ -15,7 +15,7 @@ class PresetReviewCommentDetails {
     )
     val cleanCodeC03RedundantComment = createCleanCodeComment(
         "[C03] - Redundant Comment",
-        "A comment that has gotten old, irrelevant, and incorrect is obsolete. Comments get old quickly. It is best not to write a comment that will become obsolete. If you find an obsolete comment, it is best to update it or get rid of it as quickly as possible. Obsolete comments tend to migrate away from the code they once described. They become floating islands of irrelevance or misdirection. Comments should say things that the code cannot say for itself."
+       "A comment is redundant if it describes something that adequately describes itself. Comments should say things that the code cannot say for itself."
     )
     val cleanCodeC04PoorlyWrittenComment = createCleanCodeComment(
         "[C04] - Poorly Written Comment",
