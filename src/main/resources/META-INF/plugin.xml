@@ -2,7 +2,6 @@
     <id>ca.ulaval.glo.sensei</id>
     <name>Sensei - Code Reviews</name>
     <vendor email="samuelcabralcruz@gmail.com" url="https://github.com/SamuelCabralCruz">Samuel Cabral Cruz</vendor>
-    <version>1.0.0</version>
 
     <description>
         This plugin has been developed to ease the work of software engineer courses' assistants that are in charge

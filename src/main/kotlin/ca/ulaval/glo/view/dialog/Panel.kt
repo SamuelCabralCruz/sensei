@@ -9,7 +9,7 @@ import javax.swing.JPanel
 
 class Panel(nbColumnsGrid: Int = 1) : JPanel(GridBagLayout()) {
     val gridBag: GridBag = GridBag()
-        .setDefaultInsets(0, 1, AbstractLayout.DEFAULT_VGAP, AbstractLayout.DEFAULT_HGAP)
+        .setDefaultInsets(0, nbColumnsGrid, AbstractLayout.DEFAULT_VGAP, AbstractLayout.DEFAULT_HGAP)
         .setDefaultWeightX(1.0)
         .setDefaultFill(GridBagConstraints.HORIZONTAL)
 
