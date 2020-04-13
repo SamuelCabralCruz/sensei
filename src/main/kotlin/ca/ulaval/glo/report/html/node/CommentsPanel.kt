@@ -48,6 +48,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
     }
 
     private fun appendGeneralComments(buffer: HtmlBuffer) {
+        if (review.generalComments.isEmpty()) return
         buffer.append("<div class='general-comments'>")
         buffer.increaseIndent()
         buffer.append("<div class='general-comments-title'>General Comments</div>")
@@ -68,6 +69,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
     }
 
     private fun appendFilesComments(buffer: HtmlBuffer) {
+        if (review.filesComments.isEmpty()) return
         buffer.append("<div class='files-comments'>")
         buffer.increaseIndent()
         buffer.append("<div class='files-comments-title'>Specific Comments</div>")
@@ -111,7 +113,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
     }
 
     private fun appendComment(buffer: HtmlBuffer, index: Int, comment: ReviewComment, cssClass: String) {
-        buffer.append("<div key='${comment.hashCode()}-$index' class='comment $cssClass'>")
+        buffer.append("<div key='${comment.hashCode()}-$index' class='sensei-comment $cssClass'>")
         buffer.increaseIndent()
         appendCommentHeader(buffer, comment)
         appendCommentBody(buffer, comment)
