@@ -2,6 +2,7 @@ package ca.ulaval.glo.report.html.node
 
 import ca.ulaval.glo.model.review.Review
 import ca.ulaval.glo.model.review.comment.ReviewFileComment
+import ca.ulaval.glo.report.file.FileExtension
 import ca.ulaval.glo.report.file.extractPathStructure
 import ca.ulaval.glo.report.html.HtmlBuffer
 import org.apache.commons.text.StringEscapeUtils
@@ -84,15 +85,8 @@ class SnippetsPanel(private val review: Review) : HtmlNode() {
         return otherAttributes.joinToString(" ")
     }
 
-    private fun getBrush(filePath: String): String {
-        return when (extractPathStructure(filePath).extension) {
-            "java" -> "java"
-            "xml" -> "xml"
-            else -> {
-                ""
-            }
-        }
-    }
+    private fun getBrush(filePath: String): String =
+        FileExtension.fromExtension(extractPathStructure(filePath).extension).brush
 
     override fun closeTag(buffer: HtmlBuffer) {
         buffer.decreaseIndent()
