@@ -15,7 +15,7 @@ class PresetReviewCommentDetails {
     )
     val cleanCodeC03RedundantComment = createCleanCodeComment(
         "[C03] - Redundant Comment",
-       "A comment is redundant if it describes something that adequately describes itself. Comments should say things that the code cannot say for itself."
+        "A comment is redundant if it describes something that adequately describes itself. Comments should say things that the code cannot say for itself."
     )
     val cleanCodeC04PoorlyWrittenComment = createCleanCodeComment(
         "[C04] - Poorly Written Comment",
@@ -288,6 +288,16 @@ class PresetReviewCommentDetails {
     val solid5DependencyInversionPrinciple = createSolidPrinciplesComment(
         "[SOLID5] - Dependency Inversion Principle (DIP)",
         "Entities must depend on abstractions not on concretions. It states that the high level module must not depend on the low level module, but they should depend on abstractions."
+    )
+    val tellDontAskPrinciple = ReviewCommentDetails(
+        "[TDA] - Tell Don't Ask",
+        "Tell-Don't-Ask is a principle that helps people remember that object-orientation is about bundling data with the functions that operate on that data. It reminds us that rather than asking an object for data and acting on that data, we should instead tell an object what to do. This encourages to move behavior into an object to go with the data.",
+        mutableListOf(ARCHITECTURE)
+    )
+    val primitiveObsession = ReviewCommentDetails(
+        "[PRIM] - Primitive Obsession",
+        "Primitive Obsession is using primitive data types to represent domain ideas. For example, we use a String to represent a message, an Integer to represent an amount of money, or a Struct/Dictionary/Hash to represent a specific object.",
+        mutableListOf(ARCHITECTURE)
     )
 }
 
