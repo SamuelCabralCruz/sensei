@@ -17,7 +17,7 @@ class RunnableLineMarkerProvider : LineMarkerProvider {
         elements: MutableList<PsiElement>,
         result: MutableCollection<LineMarkerInfo<PsiElement>>
     ) {
-        if(elements.isEmpty()) return
+        if (elements.isEmpty()) return
         val project = elements[0].project
         val reviewComments = project.service<ReviewPersistence>().state?.filesComments ?: return
         val projectBasePath = project.basePath ?: return
@@ -41,5 +41,11 @@ class RunnableLineMarkerProvider : LineMarkerProvider {
                 reviewCommentsForCurrentFileByLine.remove(elementLine)
             })
         })
+        if (reviewCommentsForCurrentFileByLine.isNotEmpty()) {
+            reviewCommentsForCurrentFileByLine.values.flatten().forEach(fun(reviewComment) {
+                val firstElement = elements.first()
+                result.add(CommentLineMarkerFactory().create(firstElement, reviewComment))
+            })
+        }
     }
 }
