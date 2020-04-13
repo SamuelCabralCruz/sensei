@@ -140,6 +140,30 @@
             ...
         }
         ```
+    - Remove inline code related styling
+        ```css
+        /* Inline code */
+        :not(pre) > code[class*="language-"] {
+            position: relative;
+            padding: .2em;
+            border-radius: 0.3em;
+            color: #c92c2c;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            display: inline;
+            white-space: normal;
+        }
+        
+        :not(pre) > code[class*="language-"]:after,
+        pre[class*="language-"]:after {
+            right: 0.75em;
+            left: auto;
+            -webkit-transform: rotate(2deg);
+            -moz-transform: rotate(2deg);
+            -ms-transform: rotate(2deg);
+            -o-transform: rotate(2deg);
+            transform: rotate(2deg);
+        }
+        ```
 
 ## JQuery
 
