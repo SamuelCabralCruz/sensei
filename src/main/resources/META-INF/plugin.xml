@@ -2,7 +2,7 @@
     <id>ca.ulaval.glo.sensei</id>
     <name>Sensei - Code Reviews</name>
     <vendor email="samuelcabralcruz@gmail.com" url="https://github.com/SamuelCabralCruz">Samuel Cabral Cruz</vendor>
-    <idea-version since-build="183.4284.148"/>
+    <idea-version since-build="193.6911.18"/>
     
     <description>
         This plugin has been developed to ease the work of software engineer courses' assistants that are in charge
@@ -12,9 +12,9 @@
     </description>
     <change-notes>
         <![CDATA[
-            <h3>Version 1.0.2</h3>
+            <h3>Version 1.0.3</h3>
             <ul>
-                <li>Default display line markers of unmatched file comments</li>
+                <li>Fix retro-compatibility problems by supporting 2019.3.4 and upward</li>
             </ul>
         ]]>
     </change-notes>
