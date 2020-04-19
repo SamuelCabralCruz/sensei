@@ -83,7 +83,11 @@ class Review {
         updatedComments.removeIf(fun(fileComment: ReviewFileComment): Boolean {
             return fileComment.hashCode() == commentToRemoveHashCode
         })
-        filesComments[filePath] = updatedComments
+        if (updatedComments.isEmpty()) {
+            filesComments.remove(filePath)
+        } else {
+            filesComments[filePath] = updatedComments
+        }
     }
 
     fun replaceFileComment(oldFileComment: ReviewFileComment, newFileComment: ReviewFileComment) {
