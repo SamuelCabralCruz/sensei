@@ -13,10 +13,7 @@ class RunnableLineMarkerProvider : LineMarkerProvider {
         return null
     }
 
-    override fun collectSlowLineMarkers(
-        elements: MutableList<PsiElement>,
-        result: MutableCollection<LineMarkerInfo<PsiElement>>
-    ) {
+    override fun collectSlowLineMarkers(elements: MutableList<out PsiElement>, result: MutableCollection<in LineMarkerInfo<*>>) {
         if (elements.isEmpty()) return
         val project = elements[0].project
         val reviewComments = project.service<ReviewPersistence>().state?.filesComments ?: return

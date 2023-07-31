@@ -32,7 +32,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
     private fun appendCommentsPanelHeaderTitle(buffer: HtmlBuffer) {
         buffer.append("<div class='comments-panel-header-title'>")
         buffer.increaseIndent()
-        buffer.append(review.details.evaluationName!!.capitalize())
+        buffer.append(review.details.evaluationName!!.replaceFirstChar(Char::uppercase))
         buffer.decreaseIndent()
         buffer.append("</div>")
     }
@@ -190,7 +190,7 @@ class CommentsPanel(private val review: Review) : HtmlNode() {
         buffer.append("<div class='comment-body-content-tags'>")
         buffer.increaseIndent()
         tags.forEach(fun(tag) {
-            val tagClassName = tag.value.toLowerCase().split(" ").joinToString("-")
+            val tagClassName = tag.value.lowercase().split(" ").joinToString("-")
             buffer.append("<span class='badge $tagClassName'>${tag.value}</span>")
         })
         buffer.decreaseIndent()
